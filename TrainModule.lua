@@ -14,3 +14,16 @@
 
 	// Note: for documentation see *inserting devforum link here*
 --]]
+
+local TrainModule = {}
+TrainModule.__index = TrainModule
+
+
+--// Main Function //
+
+function TrainModule.new(trainModel, data)
+	local classSelf = {}
+	setmetatable(classSelf, TrainModule)
+	classSelf.trainModel = trainModel
+	classSelf.rawData = data
+end
