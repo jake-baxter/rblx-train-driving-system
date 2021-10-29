@@ -30,6 +30,25 @@ function TrainModule.new(trainModel, data)
 	if not data["baseStud"] then
 		classSelf.baseStud = data["baseStud"]
 	end
+
+	assert(data["throttle"], "Include Throttle Value")
+	if not (type(data["throttle"]) == "int") then
+		error("Throttle must be an integer!")
+	end
+	if data["throttle"] < 1 then
+		error("Throttle must be greater to or 1!")
+	end
+	classSelf.throttle = data["throttle"]
+	
+
+	assert(data["brake"], "Include Brake Value")
+	if not (type(data["brake"]) == "int") then
+		error("Brake must be an integer!")
+	end
+	if data["brake"] < 1 then
+		error("Brake must be greater to or 1!")
+	end
+	classSelf.brake = data["brake"]
 end
 
 return TrainModule
