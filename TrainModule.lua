@@ -27,3 +27,5 @@ function TrainModule.new(trainModel, data)
 	classSelf.trainModel = trainModel
 	classSelf.rawData = data
 end
+
+return TrainModule
