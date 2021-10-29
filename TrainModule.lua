@@ -26,6 +26,10 @@ function TrainModule.new(trainModel, data)
 	setmetatable(classSelf, TrainModule)
 	classSelf.trainModel = trainModel
 	classSelf.rawData = data
+	classSelf.baseStud = 1
+	if not data["baseStud"] then
+		classSelf.baseStud = data["baseStud"]
+	end
 end
 
 return TrainModule
