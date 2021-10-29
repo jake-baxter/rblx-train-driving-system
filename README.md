@@ -1,6 +1,5 @@
-# A Roblox Train Driving System - A sim
-![GitHub Release](https://img.shields.io/github/release/jake-baxter/rblx-train-driving-system/all.svg?style=flat)
+# A Roblox Train Driving System - A Simple Driving System for anyone
 
-A Work In Progress Roblox Train Driving System simply for anyone to use.
+This repository is based around a Roblox Train Driving system for anyone, no matter scripting knowledge, to use and play with.
 
 #Installation
