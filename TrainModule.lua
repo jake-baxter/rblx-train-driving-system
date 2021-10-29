@@ -49,6 +49,26 @@ function TrainModule.new(trainModel, data)
 		error("Brake must be greater to or 1!")
 	end
 	classSelf.brake = data["brake"]
+		
+
+	assert(data["throttlePower"], "Include Throttle Power Value")
+	if not (type(data["throttlePower"]) == "int" or type(data["throttlePower"]) == "number" or type(data["throttlePower"]) == "float") then
+		error("Throttle Power  must be a number / int / float!")
+	end
+	if data["throttlePower"] < 0 then
+		error("Throttle Power must be greater than 0!")
+	end
+	classSelf.throttlePower = data["throttlePower"]
+			
+
+	assert(data["brakePower"], "Include Throttle Power Value")
+	if not (type(data["brakePower"]) == "int" or type(data["brakePower"]) == "number" or type(data["brakePower"]) == "float") then
+		error("Brake Power  must be a number / int / float!")
+	end
+	if data["brakePower"] < 0 then
+		error("Brake Power must be greater than 0!")
+	end
+	classSelf.brakePower = data["brakePower"]
 end
 
 return TrainModule
