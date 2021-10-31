@@ -32,7 +32,7 @@ function TrainModule.new(trainModel, data)
 	end
 
 	assert(data["throttle"], "Include Throttle Value")
-	if not (type(data["throttle"]) == "int") then
+	if not (typeof(data["throttle"]) == "number" and math.floor(data["throttle"]) == data["throttle"]) then
 		error("Throttle must be an integer!")
 	end
 	if data["throttle"] < 1 then
@@ -42,7 +42,7 @@ function TrainModule.new(trainModel, data)
 
 
 	assert(data["brake"], "Include Brake Value")
-	if not (type(data["brake"]) == "int") then
+	if not (typeof(data["brake"]) == "number" and math.floor(data["brake"]) == data["brake"]) then
 		error("Brake must be an integer!")
 	end
 	if data["brake"] < 1 then
@@ -52,8 +52,8 @@ function TrainModule.new(trainModel, data)
 
 
 	assert(data["throttlePower"], "Include Throttle Power Value")
-	if not (type(data["throttlePower"]) == "int" or type(data["throttlePower"]) == "number" or type(data["throttlePower"]) == "float") then
-		error("Throttle Power  must be a number / int / float!")
+	if not (typeof(data["throttlePower"]) == "number") then
+		error("Throttle Power  must be a number!")
 	end
 	if data["throttlePower"] < 0 then
 		error("Throttle Power must be greater than 0!")
@@ -62,8 +62,8 @@ function TrainModule.new(trainModel, data)
 
 
 	assert(data["brakePower"], "Include Throttle Power Value")
-	if not (type(data["brakePower"]) == "int" or type(data["brakePower"]) == "number" or type(data["brakePower"]) == "float") then
-		error("Brake Power  must be a number / int / float!")
+	if not (typeof(data["brakePower"]) == "number") then
+		error("Brake Power  must be a number!")
 	end
 	if data["brakePower"] < 0 then
 		error("Brake Power must be greater than 0!")
@@ -72,8 +72,8 @@ function TrainModule.new(trainModel, data)
 
 
 	assert(data["throttleFullTime"], "Include Throttle Up Time Value")
-	if not (type(data["throttleFullTime"]) == "int" or type(data["throttleFullTime"]) == "number" or type(data["throttleFullTime"]) == "float") then
-		error("Throttle Up Time  must be a number / int / float!")
+	if not (typeof(data["throttleFullTime"]) == "number") then
+		error("Throttle Up Time  must be a number!")
 	end
 	if data["throttleFullTime"] < 0 then
 		error("Throttle Up Time must be greater than 0!")
@@ -82,8 +82,8 @@ function TrainModule.new(trainModel, data)
 
 
 	assert(data["throttleIdleTime"], "Include Throttle Down Time Value")
-	if not (type(data["throttleIdleTime"]) == "int" or type(data["throttleIdleTime"]) == "number" or type(data["throttleIdleTime"]) == "float") then
-		error("Throttle Down Time  must be a number / int / float!")
+	if not (type(data["throttleIdleTime"]) == "number") then
+		error("Throttle Down Time  must be a number!")
 	end
 	if data["throttleIdleTime"] < 0 then
 		error("Throttle Down Time must be greater than 0!")
@@ -92,8 +92,8 @@ function TrainModule.new(trainModel, data)
 
 
 	assert(data["brakeFullTime"], "Include Brake Up Time Value")
-	if not (type(data["brakeFullTime"]) == "int" or type(data["brakeFullTime"]) == "number" or type(data["brakeFullTime"]) == "float") then
-		error("Brake Up Time  must be a number / int / float!")
+	if not (typeof(data["brakeFullTime"]) == "number") then
+		error("Brake Up Time  must be a number!")
 	end
 	if data["brakeFullTime"] < 0 then
 		error("Brake Up Time must be greater than 0!")
@@ -102,8 +102,8 @@ function TrainModule.new(trainModel, data)
 
 
 	assert(data["brakeIdleTime"], "Brake Throttle Down Time Value")
-	if not (type(data["brakeIdleTime"]) == "int" or type(data["brakeIdleTime"]) == "number" or type(data["brakeIdleTime"]) == "float") then
-		error("Brake Down Time  must be a number / int / float!")
+	if not (typeof(data["brakeIdleTime"]) == "number") then
+		error("Brake Down Time  must be a number!")
 	end
 	if data["brakeIdleTime"] < 0 then
 		error("Brake Down Time must be greater than 0!")

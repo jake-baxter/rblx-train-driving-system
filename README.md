@@ -14,4 +14,7 @@ Instructions for downloading/updating will be provided with this release.
 
 # Setting up your first train
 
+Once you have installed the Module Script and the rest of the necesary files, you can start getting your trains ready!
+
+Start by using your train 
 
