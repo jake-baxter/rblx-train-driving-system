@@ -30,6 +30,8 @@ function TrainModule.new(trainModel, data)
 	classSelf.currentDriver = nil
 	classSelf.reversed = false
 	classSelf.canReverse = false
+	local moduleEvent = Instance.new("BindableEvent")
+	classSelf.Event = moduleEvent
 	classSelf.baseStud = 1
 	if not data["baseStud"] then
 		classSelf.baseStud = data["baseStud"]
@@ -147,7 +149,7 @@ function TrainModule.new(trainModel, data)
 		if not (tempScriptReferenceRequire.Version[1] == TrainModule.Version[1]) then
 			continue
 		end
-		local tempScriptInit = tempScriptReferenceRequire.init()
+		local tempScriptInit = tempScriptReferenceRequire.init(classSelf, moduleEvent.Event)
 		table.insert(classSelf.modules, {required = tempScriptInit, name = tempScriptReferenceRequire.Name})
 	end
 
