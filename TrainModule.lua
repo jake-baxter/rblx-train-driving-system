@@ -110,6 +110,33 @@ function TrainModule.new(trainModel, data)
 		error("Brake Down Time must be greater than 0!")
 	end
 	classSelf.brakeIdleTime = data["brakeIdleTime"]
+
+
+	if not (typeof(data["GUI"]) == "Instance") then
+		error("GUI needs to be a ScreenGUI instance!")
+	end
+	if not (data["GUI"]:IsA("ScreenGUI")) then
+		error("GUI needs to be a ScreenGUI instance!")
+	end
+
+	if not(type(data["customModules"]) == "table") then
+		error("customModules must be a table!")
+	end
+	classSelf.modules = {}
+	for _, scriptReference in pairs(data["customModules"]) do
+		if not (scriptReference:IsA("ModuleScript")) then
+			continue
+		end
+		local tempScriptReferenceRequire = require(scriptReference)
+		if not (tempScriptReferenceRequire.Version[0] == TrainModule.Version[0]) then
+			continue
+		end
+		if not (tempScriptReferenceRequire.Version[1] == TrainModule.Version[1]) then
+			continue
+		end
+		local tempScriptInit = tempScriptReferenceRequire.init()
+		table.insert(classSelf.modules, {required = tempScriptInit, name = tempScriptReferenceRequire.Name})
+	end
 end
 
 return TrainModule
