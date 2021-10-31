@@ -16,6 +16,7 @@
 --]]
 
 local TrainModule = {}
+TrainModule.Version = {1, 0, 0} --//Update per version
 TrainModule.__index = TrainModule
 
 
