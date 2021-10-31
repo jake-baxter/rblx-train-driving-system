@@ -147,6 +147,8 @@ function TrainModule.new(trainModel, data)
 		local tempScriptInit = tempScriptReferenceRequire.init()
 		table.insert(classSelf.modules, {required = tempScriptInit, name = tempScriptReferenceRequire.Name})
 	end
+
+	return classSelf
 end
 
 return TrainModule
