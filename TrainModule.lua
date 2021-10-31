@@ -32,6 +32,13 @@ function TrainModule.new(trainModel, data)
 		classSelf.baseStud = data["baseStud"]
 	end
 
+
+	assert(data["vehicleSeat"], "Include Vehicle Seat Object Reference")
+	if not (data["vehicleSeat"]:IsA("VehicleSeat")) then
+		error("VehicleSeat must be a vehicle seat (Duh)!")
+	end
+
+	
 	assert(data["throttle"], "Include Throttle Value")
 	if not (typeof(data["throttle"]) == "number" and math.floor(data["throttle"]) == data["throttle"]) then
 		error("Throttle must be an integer!")
