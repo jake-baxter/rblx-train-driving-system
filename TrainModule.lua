@@ -38,7 +38,7 @@ function TrainModule.new(trainModel, data)
 		error("VehicleSeat must be a vehicle seat (Duh)!")
 	end
 
-	
+
 	assert(data["throttle"], "Include Throttle Value")
 	if not (typeof(data["throttle"]) == "number" and math.floor(data["throttle"]) == data["throttle"]) then
 		error("Throttle must be an integer!")
@@ -119,6 +119,7 @@ function TrainModule.new(trainModel, data)
 	classSelf.brakeIdleTime = data["brakeIdleTime"]
 
 
+	assert(data["GUI"], "There must be a GUI set!")
 	if not (typeof(data["GUI"]) == "Instance") then
 		error("GUI needs to be a ScreenGUI instance!")
 	end
@@ -126,6 +127,8 @@ function TrainModule.new(trainModel, data)
 		error("GUI needs to be a ScreenGUI instance!")
 	end
 
+
+	assert(data["customModules"], "There must be a GUI set!")
 	if not(type(data["customModules"]) == "table") then
 		error("customModules must be a table!")
 	end
