@@ -158,4 +158,57 @@ function TrainModule.new(trainModel, data)
 	return classSelf
 end
 
+
+--// Main Function //
+
+
+function LocalModule:GetDriver()
+	return self.currentDriver
+end
+
+
+function LocalModule:EnableModule(moduleReference)
+	if not (moduleReference:IsA("ModuleScript")) then
+		return false
+	end
+	local tempScriptReferenceRequire = require(moduleReference)
+	if not (tempScriptReferenceRequire.Version[0] == TrainModule.Version[0]) then
+		return false
+	end
+	if not (tempScriptReferenceRequire.Version[1] == TrainModule.Version[1]) then
+		return false
+	end
+	local tempScriptInit = tempScriptReferenceRequire.init(self, self.Event)
+	table.insert(self.modules, {required = tempScriptInit, name = tempScriptReferenceRequire.Name})
+	return true
+end
+
+
+function LocalModule:DisableModule(moduleReference)
+	if not (type(moduleReference) == "string") then
+		return false
+	end
+	for _,scriptReference in pairs(self.modules) do
+		if not (scriptReference.name == moduleReference) then
+			continue
+		end
+		scriptReference.required:OnDisable()
+		table.remove(self.modules, table.find(self.modules, scriptReference))
+		return true
+	end
+	return false
+end
+
+
+function LocalModule:ForceReverse()
+	return false --//pull request at some point.
+end
+
+
+function LocalModule:SendMessage(moduleName, Table)
+	self.Event:Fire(moduleName, Table)
+	return true
+end
+
+
 return TrainModule
