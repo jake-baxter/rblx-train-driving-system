@@ -27,6 +27,9 @@ function TrainModule.new(trainModel, data)
 	setmetatable(classSelf, TrainModule)
 	classSelf.trainModel = trainModel
 	classSelf.rawData = data
+	classSelf.currentDriver = nil
+	classSelf.reversed = false
+	classSelf.canReverse = false
 	classSelf.baseStud = 1
 	if not data["baseStud"] then
 		classSelf.baseStud = data["baseStud"]
