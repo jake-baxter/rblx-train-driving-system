@@ -18,13 +18,15 @@
 local TrainModule = {}
 TrainModule.Version = {1, 0, 0} --//Update per version
 TrainModule.__index = TrainModule
+local LocalModule = {}
+LocalModule.__index = LocalModule
 
 
 --// Main Function //
 
 function TrainModule.new(trainModel, data)
 	local classSelf = {}
-	setmetatable(classSelf, TrainModule)
+	setmetatable(classSelf, LocalModule)
 	classSelf.trainModel = trainModel
 	classSelf.rawData = data
 	classSelf.currentDriver = nil
