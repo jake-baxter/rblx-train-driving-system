@@ -232,13 +232,42 @@ end
 
 
 function LocalModule:ForceReverse()
-
-	return false --//pull request at some point.
+	if self.revBasePart then
+		if self.reversed == false then
+			self.reversed = true
+			local seat = self.vehicleSeat
+			if self.revVehicleSeat then
+				seat = self.revVehicleSeat
+			end
+			self:SendPlayerMessage("base", {
+				action = "reversed",
+				seat = seat
+			})
+			return true
+		end
+		if self.reversed == true then
+			self.reversed = false
+			self:SendPlayerMessage("base", {
+				action = "reversed",
+				seat = self.vehicleSeat
+			})
+			return true
+		end
+	end
+	return false
 end
 
 
 function LocalModule:SendMessage(moduleName, Table)
 	self.Event:Fire(moduleName, Table)
+	return true
+end
+
+
+function LocalModule:SendPlayerMessage(moduleName, Table)
+	if self.remoteEvent then
+		self.remoteEvent:Fire(moduleName, Table)
+	end
 	return true
 end
 
