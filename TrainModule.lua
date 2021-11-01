@@ -32,6 +32,8 @@ function TrainModule.new(trainModel, data)
 	classSelf.currentDriver = nil
 	classSelf.reversed = false
 	classSelf.canReverse = false
+	classSelf.remoteEvent = nil
+	classSelf.remoteFunction = nil
 	local moduleEvent = Instance.new("BindableEvent")
 	classSelf.Event = moduleEvent
 	classSelf.baseStud = 1
@@ -186,6 +188,16 @@ function LocalModule:GetDriver()
 end
 
 
+function LocalModule:RegisterPlayer(player)
+
+end
+
+
+function LocalModule:DeregisterPlayer()
+	
+end
+
+
 function LocalModule:EnableModule(moduleReference)
 	if not (moduleReference:IsA("ModuleScript")) then
 		return false
@@ -220,6 +232,7 @@ end
 
 
 function LocalModule:ForceReverse()
+
 	return false --//pull request at some point.
 end
 
