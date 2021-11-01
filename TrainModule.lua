@@ -44,8 +44,27 @@ function TrainModule.new(trainModel, data)
 	if not (data["vehicleSeat"]:IsA("VehicleSeat")) then
 		error("VehicleSeat must be a vehicle seat (Duh)!")
 	end
+	classSelf.vehicleSeat = data["vehicleSeat"]
 
 
+	assert(data["basePart"], "Include Base Part Object Reference")
+	if not (data["basePart"]:IsA("BasePart")) then
+		error("Base part must include your running base part!")
+	end
+	classSelf.basePart = data["basePart"]
+
+
+	if (data["revBasePart"]) then
+		if (data["revBasePart"]:IsA("BasePart")) then
+			classSelf.revBasePart = data["revBasePart"]
+			if (data["revVehicleSeat"]) then
+				if (data["revVehicleSeat"]:IsA("VehicleSeat")) then
+					classSelf.canReverse = true
+					classSelf.revVehicleSeat = data["revVehicleSeat"]
+				end
+			end
+		end
+	end
 	assert(data["throttle"], "Include Throttle Value")
 	if not (typeof(data["throttle"]) == "number" and math.floor(data["throttle"]) == data["throttle"]) then
 		error("Throttle must be an integer!")
