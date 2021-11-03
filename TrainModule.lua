@@ -47,6 +47,9 @@ function TrainModule.new(trainModel, data)
 		error("VehicleSeat must be a vehicle seat (Duh)!")
 	end
 	classSelf.vehicleSeat = data["vehicleSeat"]
+	local tempRemoteEvent = Instance.new("RemoteEvent")
+	tempRemoteEvent.Parent = data["vehicleSeat"]
+	classSelf.remoteEvent = tempRemoteEvent
 
 
 	assert(data["basePart"], "Include Base Part Object Reference")
@@ -127,6 +130,7 @@ function TrainModule.new(trainModel, data)
 	classSelf.throttleIdleTime = data["throttleIdleTime"]
 
 
+
 	assert(data["brakeFullTime"], "Include Brake Up Time Value")
 	if not (typeof(data["brakeFullTime"]) == "number") then
 		error("Brake Up Time  must be a number!")
@@ -189,7 +193,9 @@ end
 
 
 function LocalModule:RegisterPlayer(player)
-
+	if not player.Parent == game.Players then
+		return false
+	end
 end
 
 
@@ -266,7 +272,7 @@ end
 
 function LocalModule:SendPlayerMessage(moduleName, Table)
 	if self.remoteEvent then
-		self.remoteEvent:Fire(moduleName, Table)
+		self.remoteEvent:Fire(self.currentDriver, moduleName, self, Table)
 	end
 	return true
 end
