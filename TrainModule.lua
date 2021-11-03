@@ -180,6 +180,39 @@ function TrainModule.new(trainModel, data)
 		table.insert(classSelf.modules, {required = tempScriptInit, name = tempScriptReferenceRequire.Name})
 	end
 
+
+	classSelf.functions = {}
+	classSelf.functions.SeatRegister = classSelf.vehicleSeat.ChildAdded:connect(function(child)
+		if not (child.Name == "SeatWeld") then
+			return false
+		end
+		if not (child.Part1.Name == "HumanoidRootPart") then
+			return false
+		end
+		local tempPlayerStore = game.Players:GetPlayerFromCharacter(child.Part1.Parent)
+		if not (tempPlayerStore) then
+			return false
+		end
+		local tempPlayerGui = classSelf["GUI"]:Clone()
+		tempPlayerGui.Parent = tempPlayerStore.PlayerGui
+		classSelf["currentDriver"] = tempPlayerStore
+	end)
+
+
+	classSelf.functions.clientregister = classSelf.remoteEvent.OnServerEvent:connect(function(player, moduleName, TableR)
+		if not (moduleName == "Register") then
+			return false
+		end
+		if not (type(TableR) == "table") then
+			return false
+		end
+		if not (player == classSelf.currentDriver) then
+			return false
+		end
+		classSelf.remoteEvent:FireClient(player, moduleName, classSelf.localTable)
+	end)
+
+
 	return classSelf
 end
 
@@ -189,13 +222,6 @@ end
 
 function LocalModule:GetDriver()
 	return self.currentDriver
-end
-
-
-function LocalModule:RegisterPlayer(player)
-	if not player.Parent == game.Players then
-		return false
-	end
 end
 
 
