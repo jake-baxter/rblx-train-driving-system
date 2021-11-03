@@ -57,6 +57,10 @@ function TrainModule.new(trainModel, data)
 		error("Base part must include your running base part!")
 	end
 	classSelf.basePart = data["basePart"]
+	Instance.new("BodyVelocity", classSelf.basePart)
+	classSelf.basePart.BodyVelocity.MaxForce = Vector3.new(0,0,0)
+	classSelf.basePart.BodyVelocity.Velocity = Vector3.new(0,0,0)
+	classSelf.basePart.BodyVelocity.P = 0
 
 
 	if (data["revBasePart"]) then
@@ -180,7 +184,10 @@ function TrainModule.new(trainModel, data)
 		table.insert(classSelf.modules, {required = tempScriptInit, name = tempScriptReferenceRequire.Name})
 	end
 
+
 	classSelf.functions = {}
+
+
 	classSelf.functions.SeatRegister = classSelf.vehicleSeat.ChildAdded:connect(function(child)
 		if not (child.Name == "SeatWeld") then
 			return false
@@ -195,6 +202,20 @@ function TrainModule.new(trainModel, data)
 		local tempPlayerGui = classSelf["GUI"]:Clone()
 		tempPlayerGui.Parent = tempPlayerStore.PlayerGui
 		classSelf["currentDriver"] = tempPlayerStore
+		classSelf.Event:Fire("base", {class = classSelf, action = "DriverIn", player = tempPlayerStore, UI = tempPlayerGui})
+	end)
+
+
+	classSelf.functions.SeatUnRegister = classSelf.vehicleSeat.ChildRemoved:connect(function(child)
+		if not (child.Name == "SeatWeld") then
+			return false
+		end
+		classSelf["currentDriver"] = nil
+		classSelf.basePart.BodyVelocity.MaxForce = Vector3.new(0,0,0)
+		classSelf.basePart.BodyVelocity.Velocity = Vector3.new(0,0,0)
+		classSelf.basePart.BodyVelocity.P = 0
+		classSelf.throttle = 0
+		classSelf.Event:Fire("base", {class = classSelf, action = "DriverOut"})
 	end)
 
 
@@ -209,6 +230,7 @@ function TrainModule.new(trainModel, data)
 			return false
 		end
 		classSelf.remoteEvent:FireClient(player, moduleName, classSelf)
+		classSelf.Event:Fire("base", {class = classSelf, action = "ClientRegistered", player = player})
 	end)
 
 
@@ -221,11 +243,6 @@ end
 
 function LocalModule:GetDriver()
 	return self.currentDriver
-end
-
-
-function LocalModule:DeregisterPlayer()
-	
 end
 
 
@@ -274,6 +291,7 @@ function LocalModule:ForceReverse()
 				action = "reversed",
 				seat = seat
 			})
+			self.Event:Fire("base", {class = self, action = "Reversed", seat = seat})
 			return true
 		end
 		if self.reversed == true then
@@ -282,6 +300,7 @@ function LocalModule:ForceReverse()
 				action = "reversed",
 				seat = self.vehicleSeat
 			})
+			self.Event:Fire("base", {class = self, action = "Reversed", seat = self.vehicleSeat})
 			return true
 		end
 	end
