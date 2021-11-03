@@ -180,7 +180,6 @@ function TrainModule.new(trainModel, data)
 		table.insert(classSelf.modules, {required = tempScriptInit, name = tempScriptReferenceRequire.Name})
 	end
 
-
 	classSelf.functions = {}
 	classSelf.functions.SeatRegister = classSelf.vehicleSeat.ChildAdded:connect(function(child)
 		if not (child.Name == "SeatWeld") then
@@ -209,7 +208,7 @@ function TrainModule.new(trainModel, data)
 		if not (player == classSelf.currentDriver) then
 			return false
 		end
-		classSelf.remoteEvent:FireClient(player, moduleName, classSelf.localTable)
+		classSelf.remoteEvent:FireClient(player, moduleName, classSelf)
 	end)
 
 
