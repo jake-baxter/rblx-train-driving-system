@@ -5,6 +5,10 @@ If you'd like to get straight on with it, a .rbxm is provided in the releases, b
 
 If you are a programmer wishing to help contribute to this repository, please read down at the bottom of this.
 
+# YouTube Video
+
+To be updated
+
 # Installation
 To get a stable release, head to [this page](https://github.com/jake-baxter/rblx-train-driving-system/releases) this page and download a version with a stable tag.
 
@@ -12,9 +16,6 @@ Other versions ending with -alpha or -beta are unstable and better for simple us
 
 Instructions for downloading/updating will be provided with this release.
 
-# Setting up your first train
+Unextract the zip file and open the readme.txt file, which will provide installation instructions.
 
-Once you have installed the Module Script and the rest of the necesary files, you can start getting your trains ready!
-
-Start by using your train 
-
+If you need a tutorial on how to do this, go up to the youtube header above.
