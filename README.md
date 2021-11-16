@@ -49,18 +49,22 @@ returns `classSelf` - Dictionary of train Functions and values
 ##### ```:GetDriver()``` - Gets the current driver
 returns `player` - Player object of driver
 
+
 ##### ```:EnableModule(moduleReference)``` - Enables a Module
 `moduleReference`  Object Value of appropiate module script
 returns `bool` - True/False if enabled or not
+
 
 ##### ```:DisableModule(moduleName)``` - Disables a Module
 `moduleName`  String Value of model name
 returns `bool` - True/False if enabled or not
 
+
 ##### ```:SendMessage(moduleName, Table)``` - Sends a message server side.
 `moduleName`  String Value of module name to send a message to or on behalf.
 `Table`  Table of what you want to send
 returns `bool` - Always true if no errors
+
 
 ##### ```:SendPlayerMessage(moduleName, Table)``` - Sends a message to the driver player.
 `moduleName`  String Value of module name to send a message to or on behalf.
