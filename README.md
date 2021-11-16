@@ -37,6 +37,32 @@ local newTrain = TrainModule.new(
 
 You can then used the returned table by .new()  to call other functions or register RBXScriptConnections
 
+A full example:
+```
+local TrainModule = require(game:GetService("ServerStorage"):WaitForChild("TrainModule"))
+local newTrain = TrainModule.new(
+    script.Parent,
+    {
+        "vehicleSeat": script.Parent.Front.VehicleSeat, --Vehicle Seat Reference
+        "basePart": script.Parent.Front.BasePart, --Base Part Reference
+        "throttle": 5, -- 5 Throttle notches
+        "brake": 3, -- 3 brake notches
+        "throttlePower": 3, -- 3 studs per second accel at max throttle
+        "brakePower": 5, -- 5 studs per second deccel at max brake
+        "throttleFullTime": 5, -- 5 seconds to get to full throttle from idle
+        "throttleIdleTime": 2, -- 2 seconds to get to idle from full
+        "brakeFullTime": 3, -- 3 seconds to get to full from released
+        "brakeIdleTime": 3, -- 3 seconds to get to released (idle) to full
+        "maxSpeed": 60, -- 60 studs is maximum speed
+        "GUI": game:GetService("ServerStorage"):WaitForChild("TrainUI1"), -- ScreenGUI object for train
+        "customModules": {
+            game:GetService("ServerStorage"):WaitForChild("TrainModule"):WaitForChild("SoundSystem")  --Custom modules for customisation for driving system
+        },
+        "SoundSystemModType": "Loco" -- This is custom and will probably not be sound system setup
+    }
+)
+```
+
 # Functions
 
 ## Direct Require
@@ -81,3 +107,6 @@ returns `bool` - Always true if no errors
 `Table`  Table of what you want to send
 
 returns `bool` - True if sent, false if not.
+
+# Train Input Data
+This systems .new() function relies on a table being inputted as a second argument.
