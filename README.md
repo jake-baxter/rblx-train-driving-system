@@ -109,6 +109,30 @@ returns `bool` - Always true if no errors
 returns `bool` - True if sent, false if not.
 
 # Train Input Data
-This systems .new() function relies on a table being inputted as a second argument.
+This systems .new() function relies on a table being inputted as a second argument. These values can be put into the train input data table argument.
 
 Value will be followed by value type. * means required, " is recommended
+
+`basestud`(float - 1)" - Edit how a stud is measured in the system (e.g. convert to mph)
+
+`vehicleSeat`(object)* - Object value to seat or vehicle seat to sit in
+
+`revVehicleSeat`(object - nil) - Object value to reversible seat or vehicle seat to sit in
+
+`throttle`(int)* - Throttle Notches
+
+`brake`(int)* - Brake Notches
+
+`throttlePower`(float)* - Amount of acceleration at top throttle
+
+`brakePower`(float)* - Amount of decceleration at top brake
+
+`throttleFullTime`(float)* - Seconds from idle to full throttle
+
+`throttleIdleTime`(float)* - Seconds from full to idle throttle
+
+`brakeFullTime`(float)* - Seconds from idle to full brake
+
+`brakeIdleTime`(float)* - Seconds from full to idle brake
+
+`maxSpeed`(float)* - Maximum speed of train
