@@ -45,9 +45,11 @@ You can then used the returned table by .new()  to call other functions or regis
 `inputTrainData`  Table of Train Input Data (see section below)
 returns `classSelf` - Dictionary of train Functions and values
 
+
 ### Train Functions
 ##### ```:GetDriver()``` - Gets the current driver
 returns `player` - Player object of driver
+
 
 
 ##### ```:EnableModule(moduleReference)``` - Enables a Module
@@ -55,15 +57,18 @@ returns `player` - Player object of driver
 returns `bool` - True/False if enabled or not
 
 
+
 ##### ```:DisableModule(moduleName)``` - Disables a Module
 `moduleName`  String Value of model name
 returns `bool` - True/False if enabled or not
+
 
 
 ##### ```:SendMessage(moduleName, Table)``` - Sends a message server side.
 `moduleName`  String Value of module name to send a message to or on behalf.
 `Table`  Table of what you want to send
 returns `bool` - Always true if no errors
+
 
 
 ##### ```:SendPlayerMessage(moduleName, Table)``` - Sends a message to the driver player.
