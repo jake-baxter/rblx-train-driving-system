@@ -17,6 +17,7 @@
 
 
 --//Variables
+local RunService = game:GetService("RunService")
 local VehicleSeat = game.Players.LocalPlayer.Character.Humanoid.SeatPart
 local RemoteClientEvent = VehicleSeat["PlayerRemoteEvent"] --//At the top to cause an error if not.
 local Velocity = 0
@@ -104,3 +105,10 @@ end
 local function PerformVelocityChanges(delta)
 	Velocity = math.clamp((Velocity + (delta*currentThrottle*throttlePower) - (delta*currentBrake*brakePower)), 0, maxSpeed)
 end
+
+
+RunService.Heartbeat:connect(function(delta)
+    UpdateStatistics(delta)
+    PerformVelocityChanges(delta)
+    setVelocity()
+end)
