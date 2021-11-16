@@ -2,7 +2,7 @@
 	// **READ-ONLY**
 	// FileName: TrainModule.lua
 	// Written by: Jake Baxter
-	// Version 1.0
+	// Version v0.0.0-alpha
 	// Description: An API for train control in roblox.
 
 	// Contributors:
@@ -16,7 +16,7 @@
 --]]
 
 local TrainModule = {}
-TrainModule.Version = {1, 0, 0} --//Update per version
+TrainModule.Version = {0, 0, 0} --//Update per version
 TrainModule.__index = TrainModule
 local LocalModule = {}
 LocalModule.__index = LocalModule
