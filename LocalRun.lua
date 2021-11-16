@@ -64,6 +64,10 @@ local currentBrake = 0
 local debounce = {}
 debounce.up = false
 debounce.down = false
+debounce.keyboardsliderup = false
+debounce.keyboardsliderdown = false
+debounce.touchsliderup = false
+debounce.touchsliderdown = false
 
 
 --//TO EDIT IF NECESARRY
