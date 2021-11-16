@@ -18,6 +18,7 @@
 
 --//Variables
 local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
 local VehicleSeat = game.Players.LocalPlayer.Character.Humanoid.SeatPart
 local RemoteClientEvent = VehicleSeat["PlayerRemoteEvent"] --//At the top to cause an error if not.
 local Velocity = 0
@@ -59,6 +60,10 @@ local targettedThrottle = 0
 local targettedBrake = 0
 local currentThrottle = 0
 local currentBrake = 0
+
+local debounce = {}
+debounce.up = false
+debounce.down = false
 
 
 --//TO EDIT IF NECESARRY
@@ -111,4 +116,31 @@ RunService.Heartbeat:connect(function(delta)
     UpdateStatistics(delta)
     PerformVelocityChanges(delta)
     setVelocity()
+end)
+
+UserInputService.InputBegan:connect(function(input)
+    if input.KeyCode == Enum.KeyCode.W then
+        if debounce.up then
+            return
+        end
+        math.clamp(targettedThrottle + (1/throttle), 0, 1)
+    end
+    if input.KeyCode == Enum.KeyCode.S then
+        if debounce.up then
+            return
+        end
+        math.clamp(targettedThrottle - (1/throttle), 0, 1)
+    end
+    if input.KeyCode == Enum.KeyCode.A then
+        if debounce.down then
+            return
+        end
+        math.clamp(targettedBrake + (1/brake), 0, 1)
+    end
+    if input.KeyCode == Enum.KeyCode.D then
+        if debounce.down then
+            return
+        end
+        math.clamp(targettedBrake - (1/brake), 0, 1)
+    end
 end)
