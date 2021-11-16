@@ -50,13 +50,14 @@ local throttleIdleTime = RawSelf["throttleIdleTime"]
 local brakeFullTime = RawSelf["brakeFullTime"]
 local brakeIdleTime = RawSelf["brakeIdleTime"]
 local isReversed = RawSelf["reversed"]
+local generalPower = RawSelf["MaxPower"]
 
 
 --//TO EDIT IF NECESARRY
 local setVelocity = function()
     if isReversed == false then
         --//This uses hhwheats simple driving calculations. Change if you wish.
-        local vectorpower = 1*basePart.CFrame.lookVector
+        local vectorpower = generalPower*basePart.CFrame.lookVector
         basePart["BodyVelocity"].MaxForce = Vector3.new(vectorpower.X>0 and vectorpower.X or -vectorpower.X,
             vectorpower.Y>0 and vectorpower.Y or -vectorpower.Y,
             vectorpower.Z>0 and vectorpower.Z or -vectorpower.Z

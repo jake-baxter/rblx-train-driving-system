@@ -61,7 +61,7 @@ function TrainModule.new(trainModel, data)
 	Instance.new("BodyVelocity", classSelf.basePart)
 	classSelf.basePart.BodyVelocity.MaxForce = Vector3.new(0,0,0)
 	classSelf.basePart.BodyVelocity.Velocity = Vector3.new(0,0,0)
-	classSelf.basePart.BodyVelocity.P = 0
+	classSelf.basePart.BodyVelocity.P = 1250
 
 
 	if (data["revBasePart"]) then
@@ -154,6 +154,30 @@ function TrainModule.new(trainModel, data)
 		error("Brake Down Time must be greater than 0!")
 	end
 	classSelf.brakeIdleTime = data["brakeIdleTime"]
+
+
+	if (data["bodyVelocityP"]) then
+		if not (typeof(data["bodyVelocityP"]) == "number" and math.floor(data["bodyVelocityP"]) == data["bodyVelocityP"]) then
+			error("bodyVelocityP must be an integer!")
+		end
+		if data["throttle"] < 1 then
+			error("bodyVelocityP must be greater to or 1!")
+		end
+		classSelf.bodyVelocityP = data["bodyVelocityP"]
+		classSelf.basePart.BodyVelocity.P = data["bodyVelocityP"]
+	end
+
+
+	classSelf.MaxPower = 50000
+	if (data["MaxPower"]) then
+		if not (typeof(data["MaxPower"]) == "number" and math.floor(data["MaxPower"]) == data["MaxPower"]) then
+			error("MaxPower must be an integer!")
+		end
+		if data["throttle"] < 1 then
+			error("MaxPower must be greater to or 1!")
+		end
+		classSelf.MaxPower = data["MaxPower"]
+	end
 
 
 	assert(data["GUI"], "There must be a GUI set!")
