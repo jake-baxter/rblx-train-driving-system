@@ -156,6 +156,16 @@ function TrainModule.new(trainModel, data)
 	classSelf.brakeIdleTime = data["brakeIdleTime"]
 
 
+	assert(data["maxSpeed"], "maxSpeed Value")
+	if not (typeof(data["maxSpeed"]) == "number") then
+		error("maxSpeed  must be a number!")
+	end
+	if data["maxSpeed"] < 0 then
+		error("maxSpeed must be greater than 0!")
+	end
+	classSelf.maxSpeed = data["maxSpeed"]
+
+
 	if (data["bodyVelocityP"]) then
 		if not (typeof(data["bodyVelocityP"]) == "number" and math.floor(data["bodyVelocityP"]) == data["bodyVelocityP"]) then
 			error("bodyVelocityP must be an integer!")

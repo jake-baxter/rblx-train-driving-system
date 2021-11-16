@@ -51,6 +51,13 @@ local brakeFullTime = RawSelf["brakeFullTime"]
 local brakeIdleTime = RawSelf["brakeIdleTime"]
 local isReversed = RawSelf["reversed"]
 local generalPower = RawSelf["MaxPower"]
+local maxSpeed = RawSelf["MaxPower"]
+
+
+local targettedThrottle = 0
+local targettedBrake = 0
+local currentThrottle = 0
+local currentBrake = 0
 
 
 --//TO EDIT IF NECESARRY
@@ -64,4 +71,36 @@ local setVelocity = function()
         )
         basePart["BodyVelocity"].Velocity = Velocity*basePart.CFrame.lookVector
     end
+end
+
+local function UpdateStatistics(delta)
+	if currentThrottle > (targettedThrottle / throttle) then
+		currentThrottle = math.clamp(currentThrottle - ((delta) / throttleIdleTime), 0, 1) -- down
+		if currentThrottle < (targettedThrottle / throttle) then
+			currentThrottle = (targettedThrottle / throttle)
+		end
+	end
+	if currentThrottle < (targettedThrottle / throttle) then
+		currentThrottle = math.clamp(currentThrottle + ((delta) / throttleFullTime), 0, 1) -- up
+		if currentThrottle > (targettedThrottle / throttle) then
+			currentThrottle = (targettedThrottle / throttle)
+		end
+	end
+	if currentBrake > (targettedBrake/ brake) then
+		currentBrake = math.clamp(currentBrake - ((delta) /brakeIdleTime), 0, 1) --down
+		if currentBrake < (targettedBrake / brake) then
+			currentBrake = (targettedBrake / brake)
+		end
+	end
+	if currentBrake < (targettedBrake/ brake) then
+		currentBrake = math.clamp(currentBrake + ((delta) /brakeFullTime), 0, 1)--up
+		if currentBrake > (targettedBrake / brake) then
+			currentBrake = (targettedBrake / brake)
+		end
+	end
+end
+
+
+local function PerformVelocityChanges(delta)
+	Velocity = math.clamp((Velocity + (delta*currentThrottle*throttlePower) - (delta*currentBrake*brakePower)), 0, maxSpeed)
 end
