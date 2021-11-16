@@ -1,9 +1,9 @@
 --[[
 	// **READ-ONLY**
-	// FileName: TrainModule.lua
+	// FileName: LocalRun.lua
 	// Written by: Jake Baxter
 	// Version 1.0
-	// Description: An API for train control in roblox.
+	// Description: Local Script for Train Control (UI)
 
 	// Contributors:
 		
