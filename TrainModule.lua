@@ -49,6 +49,7 @@ function TrainModule.new(trainModel, data)
 	classSelf.vehicleSeat = data["vehicleSeat"]
 	local tempRemoteEvent = Instance.new("RemoteEvent")
 	tempRemoteEvent.Parent = data["vehicleSeat"]
+	tempRemoteEvent.Name = "PlayerRemoteEvent"
 	classSelf.remoteEvent = tempRemoteEvent
 
 
