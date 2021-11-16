@@ -298,12 +298,12 @@ function LocalModule:EnableModule(moduleReference)
 end
 
 
-function LocalModule:DisableModule(moduleReference)
-	if not (type(moduleReference) == "string") then
+function LocalModule:DisableModule(moduleName)
+	if not (type(moduleName) == "string") then
 		return false
 	end
 	for _,scriptReference in pairs(self.modules) do
-		if not (scriptReference.name == moduleReference) then
+		if not (scriptReference.name == moduleName) then
 			continue
 		end
 		scriptReference.required:OnDisable()
@@ -350,10 +350,11 @@ end
 
 
 function LocalModule:SendPlayerMessage(moduleName, Table)
-	if self.remoteEvent then
+	if self.remoteEvent and self.currentDriver then
 		self.remoteEvent:Fire(self.currentDriver, moduleName, self, Table)
+		return true
 	end
-	return true
+	return false
 end
 
 
