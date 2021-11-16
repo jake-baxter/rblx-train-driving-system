@@ -110,3 +110,5 @@ returns `bool` - True if sent, false if not.
 
 # Train Input Data
 This systems .new() function relies on a table being inputted as a second argument.
+
+Value will be followed by value type. * means required, " is recommended

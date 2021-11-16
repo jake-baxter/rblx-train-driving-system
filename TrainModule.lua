@@ -43,7 +43,7 @@ function TrainModule.new(trainModel, data)
 
 
 	assert(data["vehicleSeat"], "Include Vehicle Seat Object Reference")
-	if not (data["vehicleSeat"]:IsA("VehicleSeat")) then
+	if not (data["vehicleSeat"]:IsA("VehicleSeat") or data["vehicleSeat"]:IsA("Seat")) then
 		error("VehicleSeat must be a vehicle seat (Duh)!")
 	end
 	classSelf.vehicleSeat = data["vehicleSeat"]
