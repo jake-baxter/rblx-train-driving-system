@@ -80,28 +80,28 @@ local setVelocity = function()
 end
 
 local function UpdateStatistics(delta)
-	if currentThrottle > (targettedThrottle / throttle) then
+	if currentThrottle > targettedThrottle then
 		currentThrottle = math.clamp(currentThrottle - ((delta) / throttleIdleTime), 0, 1) -- down
-		if currentThrottle < (targettedThrottle / throttle) then
-			currentThrottle = (targettedThrottle / throttle)
+		if currentThrottle < targettedThrottle then
+			currentThrottle = targettedThrottle
 		end
 	end
-	if currentThrottle < (targettedThrottle / throttle) then
+	if currentThrottle < targettedThrottle then
 		currentThrottle = math.clamp(currentThrottle + ((delta) / throttleFullTime), 0, 1) -- up
-		if currentThrottle > (targettedThrottle / throttle) then
-			currentThrottle = (targettedThrottle / throttle)
+		if currentThrottle > targettedThrottle then
+			currentThrottle = targettedThrottle
 		end
 	end
-	if currentBrake > (targettedBrake/ brake) then
+	if currentBrake > targettedBrake then
 		currentBrake = math.clamp(currentBrake - ((delta) /brakeIdleTime), 0, 1) --down
-		if currentBrake < (targettedBrake / brake) then
-			currentBrake = (targettedBrake / brake)
+		if currentBrake < targettedBrake then
+			currentBrake = targettedBrake
 		end
 	end
-	if currentBrake < (targettedBrake/ brake) then
+	if currentBrake < targettedBrake then
 		currentBrake = math.clamp(currentBrake + ((delta) /brakeFullTime), 0, 1)--up
-		if currentBrake > (targettedBrake / brake) then
-			currentBrake = (targettedBrake / brake)
+		if currentBrake > targettedBrake then
+			currentBrake = targettedBrake
 		end
 	end
 end
