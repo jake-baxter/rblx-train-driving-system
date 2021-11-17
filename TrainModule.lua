@@ -179,7 +179,7 @@ function TrainModule.new(trainModel, data)
 	end
 
 
-	classSelf.MaxPower = 50000
+	classSelf.MaxPower = 100000
 	if (data["MaxPower"]) then
 		if not (typeof(data["MaxPower"]) == "number" and math.floor(data["MaxPower"]) == data["MaxPower"]) then
 			error("MaxPower must be an integer!")
