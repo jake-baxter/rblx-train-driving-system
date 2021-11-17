@@ -131,24 +131,24 @@ UserInputService.InputBegan:connect(function(input)
         if debounce.up then
             return
         end
-        math.clamp(targettedThrottle + (1/throttle), 0, 1)
+        targettedThrottle = math.clamp(targettedThrottle + (1/throttle), 0, 1)
     end
     if input.KeyCode == Enum.KeyCode.S then
         if debounce.up then
             return
         end
-        math.clamp(targettedThrottle - (1/throttle), 0, 1)
+        targettedThrottle = math.clamp(targettedThrottle - (1/throttle), 0, 1)
     end
     if input.KeyCode == Enum.KeyCode.A then
         if debounce.down then
             return
         end
-        math.clamp(targettedBrake + (1/brake), 0, 1)
+        targettedBrake = math.clamp(targettedBrake + (1/brake), 0, 1)
     end
     if input.KeyCode == Enum.KeyCode.D then
         if debounce.down then
             return
         end
-        math.clamp(targettedBrake - (1/brake), 0, 1)
+        targettedBrake = math.clamp(targettedBrake - (1/brake), 0, 1)
     end
 end)
