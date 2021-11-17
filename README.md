@@ -194,7 +194,6 @@ You want to contribute? Cool. Make a pull request to dev branch with your contri
 
 ```
 --[[
-	// **READ-ONLY**
 	// FileName: [SCRIPT NAME].lua
 	// Written by: [AUTHORS]
 	// Version: [This will be changed by Jake]
@@ -218,13 +217,24 @@ Plugin.Name = "Your very cool plugin"
 Plugin.Version = {0, 0, 0} --//Change the first two numbers to the appropiate driving, the last one is optional for plugin identification
 Plugin.__index = Plugin
 
-function TrainModule.init(superiorSelf, EventListener)
+function Plugin.init(superiorSelf, EventListener)
 	local classSelf = {}
 	setmetatable(classSelf, Plugin)
 
 	--// do work
 
 	return classSelf
+end
+
+
+function Plugin:OnDisable()
+    if not self then
+        return false
+    end
+
+	--// do work
+
+	return true
 end
 
 return Plugin
