@@ -169,5 +169,27 @@ Value will be followed by value type. * means required, " is recommended
 
 `GUI`(object)* - ScreenGUI object to work the train.
 
-`customModules`(table)* - A table of module script references of modules to use, e.g. `{script.SoundSystem, game.ServerStorage.Modules.CustomGUI}`
+`customModules`(table)" - A table of module script references of modules to use, e.g. `{script.SoundSystem, game.ServerStorage.Modules.CustomGUI}`
 
+# Reporting issues
+If there is an issue please use the issues heading to report and give error traces and make sure your scripts are written correctly. If it is a custom plugin that comes with the download please also mention this.
+
+# Want to contribute?
+You want to contribute? Cool. Make a pull request to dev branch with your contributions and give details of what you have included in the new update. At the top you must also include the following header and fill in the appropiate if you are making a plugin:
+
+```
+--[[
+	// **READ-ONLY**
+	// FileName: [SCRIPT NAME].lua
+	// Written by: [AUTHORS]
+	// Version: [This will be changed by Jake]
+	// Description: [Include description of script]
+
+	// Contributors:
+        [Insert appropiate contributors.]
+
+	// Note: [Any appropiate notes]
+--]]
+```
+
+Use the appropiate API functions to perform actions, you can also add your own train input.
