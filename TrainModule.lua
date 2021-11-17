@@ -388,15 +388,12 @@ function LocalModule:UnanchorTrain()
 	
 	for _,basePartsUnanchor in pairs(self.trainModel:GetDescendants()) do
 		if basePartsUnanchor:IsA("BasePart") then
-			print("h")
-			print(self.currentDriver)
 			if basePartsUnanchor:CanSetNetworkOwnership() then
 				basePartsUnanchor:SetNetworkOwner(self.currentDriver)
 			end
 		end
 	end
 	
-	print("Set Network Owner Ship!")
 	self.Anchored = false
 	return true
 end
