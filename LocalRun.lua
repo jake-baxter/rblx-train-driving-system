@@ -114,6 +114,7 @@ end
 
 local function PerformVelocityChanges(delta)
 	Velocity = math.clamp((Velocity + (delta*currentThrottle*throttlePower) - (delta*currentBrake*brakePower)), 0, maxSpeed)
+    print(Velocity)
     if basePart.Anchored == true then
         Velocity = 0
     end
@@ -121,7 +122,6 @@ end
 
 
 RunService.Heartbeat:connect(function(delta)
-    print("debug 2 delta")
     UpdateStatistics(delta)
     PerformVelocityChanges(delta)
     setVelocity()
