@@ -114,10 +114,10 @@ end
 
 local function PerformVelocityChanges(delta)
 	Velocity = math.clamp((Velocity + (delta*currentThrottle*throttlePower) - (delta*currentBrake*brakePower)), 0, maxSpeed)
-    print(Velocity)
     if basePart.Anchored == true then
         Velocity = 0
     end
+    print(Velocity)
 end
 
 
