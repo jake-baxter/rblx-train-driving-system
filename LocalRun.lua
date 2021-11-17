@@ -17,8 +17,6 @@
 
 
 --//Variables
-local RunService = game:GetService("RunService")
-local UserInputService = game:GetService("UserInputService")
 local VehicleSeat = game.Players.LocalPlayer.Character.Humanoid.SeatPart
 local RemoteClientEvent = VehicleSeat["PlayerRemoteEvent"] --//At the top to cause an error if not.
 local Velocity = 0
@@ -26,6 +24,16 @@ local RawSelf = {}
 local finishedInit = false
 
 --//Init function
+VehicleSeat.AncestryChanged:connect(function()
+    script.Parent:Destroy()
+end)
+
+VehicleSeat.ChildRemoved:connect(function(child)
+    if not (child.Name == "SeatWeld") then
+        return false
+    end
+    script.Parent:Destroy()
+end)
 
 local tempFunction = function() end
 tempFunction = RemoteClientEvent.OnClientEvent:connect(function(modName, classSelf)
@@ -41,6 +49,9 @@ RemoteClientEvent:FireServer("Register", {})
 
 repeat task.wait(1) until finishedInit --// We don't want to continue.
 
+
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
 local basePart = RawSelf["basePart"]
 local revBasePart = RawSelf["revBasePart"]
 local throttle = RawSelf["throttle"]
@@ -74,7 +85,6 @@ debounce.touchsliderdown = false
 --//TO EDIT IF NECESARRY
 local setVelocity = function()
     if isReversed == false then
-        print(isReversed)
         --//This uses hhwheats simple driving calculations. Change if you wish.
         local vectorpower = generalPower*basePart.CFrame.lookVector
         basePart["BodyVelocity"].MaxForce = Vector3.new(vectorpower.X>0 and vectorpower.X or -vectorpower.X,
