@@ -115,6 +115,10 @@ Value will be followed by value type. * means required, " is recommended
 
 `basestud`(float - 1)" - Edit how a stud is measured in the system (e.g. convert to mph)
 
+`basePart`(object)* - Object value that controls train movement (BodyVelocity will be made by system automatically)
+
+`revBasePart`(object - nil) - Object value that controls train movement when reversed (BodyVelocity will be made by system automatically)
+
 `vehicleSeat`(object)* - Object value to seat or vehicle seat to sit in
 
 `revVehicleSeat`(object - nil) - Object value to reversible seat or vehicle seat to sit in
@@ -136,3 +140,12 @@ Value will be followed by value type. * means required, " is recommended
 `brakeIdleTime`(float)* - Seconds from full to idle brake
 
 `maxSpeed`(float)* - Maximum speed of train
+
+`bodyVelocityP`(float - 1250) - Body Velocity P value (lower if having issues where train flies or goes through rails)
+
+`MaxPower`(float - 50000) - Power in the system to help get velocity up (lower if having issues where train flies or goes through rails)
+
+`GUI`(object)* - ScreenGUI object to work the train.
+
+`customModules`(table)* - A table of module script references of modules to use, e.g. `{script.SoundSystem, game.ServerStorage.Modules.CustomGUI}`
+

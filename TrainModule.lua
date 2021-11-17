@@ -198,25 +198,25 @@ function TrainModule.new(trainModel, data)
 		error("GUI needs to be a ScreenGUI instance!")
 	end
 
-
-	assert(data["customModules"], "There must be a GUI set!")
-	if not(type(data["customModules"]) == "table") then
-		error("customModules must be a table!")
-	end
 	classSelf.modules = {}
-	for _, scriptReference in pairs(data["customModules"]) do
-		if not (scriptReference:IsA("ModuleScript")) then
-			continue
+	if (data["customModules"]) then
+		if not(type(data["customModules"]) == "table") then
+			error("customModules must be a table!")
 		end
-		local tempScriptReferenceRequire = require(scriptReference)
-		if not (tempScriptReferenceRequire.Version[0] == TrainModule.Version[0]) then
-			continue
+		for _, scriptReference in pairs(data["customModules"]) do
+			if not (scriptReference:IsA("ModuleScript")) then
+				continue
+			end
+			local tempScriptReferenceRequire = require(scriptReference)
+			if not (tempScriptReferenceRequire.Version[0] == TrainModule.Version[0]) then
+				continue
+			end
+			if not (tempScriptReferenceRequire.Version[1] == TrainModule.Version[1]) then
+				continue
+			end
+			local tempScriptInit = tempScriptReferenceRequire.init(classSelf, moduleEvent.Event)
+			table.insert(classSelf.modules, {required = tempScriptInit, name = tempScriptReferenceRequire.Name})
 		end
-		if not (tempScriptReferenceRequire.Version[1] == TrainModule.Version[1]) then
-			continue
-		end
-		local tempScriptInit = tempScriptReferenceRequire.init(classSelf, moduleEvent.Event)
-		table.insert(classSelf.modules, {required = tempScriptInit, name = tempScriptReferenceRequire.Name})
 	end
 
 
@@ -355,6 +355,16 @@ function LocalModule:SendPlayerMessage(moduleName, Table)
 		return true
 	end
 	return false
+end
+
+
+function LocalModule:GetClientEventConnection()
+	return self.remoteEvent.OnServerEvent
+end
+
+
+function LocalModule:GetServerEventConnection()
+	return self.Event.Event
 end
 
 
