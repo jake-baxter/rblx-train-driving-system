@@ -108,6 +108,14 @@ returns `bool` - Always true if no errors
 
 returns `bool` - True if sent, false if not.
 
+### ```:GetClientEventConnection()``` - Gets the connection Remote Event for players.
+
+returns `RBXScriptConnection` - Connection that you can connect to for events
+
+### ```:GetServerEventConnection()``` - Gets the connection Server Event.
+
+returns `RBXScriptConnection` - Connection that you can connect to for events
+
 # Train Input Data
 This systems .new() function relies on a table being inputted as a second argument. These values can be put into the train input data table argument.
 

@@ -34,6 +34,7 @@ function TrainModule.new(trainModel, data)
 	classSelf.canReverse = false
 	classSelf.remoteEvent = nil
 	classSelf.remoteFunction = nil
+	classSelf.Anchored = true
 	local moduleEvent = Instance.new("BindableEvent")
 	classSelf.Event = moduleEvent
 	classSelf.baseStud = 1
@@ -269,6 +270,13 @@ function TrainModule.new(trainModel, data)
 	end)
 
 
+	for _,basePartsUnanchor in pairs(trainModel:GetDescendants()) do
+		if basePartsUnanchor:IsA("BasePart") then
+			basePartsUnanchor.Anchored = true
+		end
+	end
+
+
 	return classSelf
 end
 
@@ -365,6 +373,34 @@ end
 
 function LocalModule:GetServerEventConnection()
 	return self.Event.Event
+end
+
+
+function LocalModule:UnanchorTrain()
+	for _,basePartsUnanchor in pairs(self.trainModel:GetDescendants()) do
+		if basePartsUnanchor:IsA("BasePart") then
+			basePartsUnanchor.Anchored = false
+			basePartsUnanchor:SetNetworkOwnership(self.currentDriver)
+			self.Anchored = false
+		end
+	end
+	return true
+end
+
+
+function LocalModule:AnchorTrain()
+	for _,basePartsUnanchor in pairs(self.trainModel:GetDescendants()) do
+		if basePartsUnanchor:IsA("BasePart") then
+			basePartsUnanchor.Anchored = true
+			self.Anchored = false
+		end
+	end
+	return true
+end
+
+
+function LocalModule:IsAnchored()
+	return self.Anchored
 end
 
 
