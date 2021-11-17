@@ -5,6 +5,8 @@ If you'd like to get straight on with it, a .rbxm is provided in the releases, b
 
 If you are a programmer wishing to help contribute to this repository, please read down at the bottom of this.
 
+[Click here for a place example](https://www.roblox.com/games/8026502237/v0-0-0-alpha-TrainModule)
+
 # YouTube Video
 
 To be updated
