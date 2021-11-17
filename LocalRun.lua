@@ -28,7 +28,7 @@ local finishedInit = false
 --//Init function
 
 local tempFunction = function() end
-local tempFunction = RemoteClientEvent.OnClientEvent:connect(function(modName, classSelf)
+tempFunction = RemoteClientEvent.OnClientEvent:connect(function(modName, classSelf)
     if not (modName == "Register") then
         return
     end
@@ -80,7 +80,7 @@ local setVelocity = function()
             vectorpower.Y>0 and vectorpower.Y or -vectorpower.Y,
             vectorpower.Z>0 and vectorpower.Z or -vectorpower.Z
         )
-        basePart["BodyVelocity"].Velocity = (Velocity*baseStud)*basePart.CFrame.lookVector
+        basePart["BodyVelocity"].Velocity = (Velocity)*basePart.CFrame.lookVector
     end
 end
 
