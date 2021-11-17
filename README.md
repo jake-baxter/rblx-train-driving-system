@@ -171,6 +171,19 @@ Value will be followed by value type. * means required, " is recommended
 
 `customModules`(table)" - A table of module script references of modules to use, e.g. `{script.SoundSystem, game.ServerStorage.Modules.CustomGUI}`
 
+# Server Events
+There isn't many server events to currently listen to, but you can use the :GetServerEventConnection() if you really need to.
+
+Events are issued in module name then table. ```ModuleName, SentData```
+
+These events currently work (module name, table):
+
+`base` - `{{class = self, action = "DriverIn", player = player, UI = tempPlayerGui}}` - Listen Only - Fires when player enters
+
+`base` - `{class = classSelf, action = "DriverOut"}` - Listen Only - Fires when player leaves
+
+Feel free to use this for your own plugins and chose new module names for them.
+
 # Reporting issues
 If there is an issue please use the issues heading to report and give error traces and make sure your scripts are written correctly. If it is a custom plugin that comes with the download please also mention this.
 
@@ -193,3 +206,5 @@ You want to contribute? Cool. Make a pull request to dev branch with your contri
 ```
 
 Use the appropiate API functions to perform actions, you can also add your own train input.
+
+When making your own functions using events make sure to assign it a new ModuleName relevant to the plugin.
