@@ -210,3 +210,22 @@ You want to contribute? Cool. Make a pull request to dev branch with your contri
 Use the appropiate API functions to perform actions, you can also add your own train input.
 
 When making your own functions using events make sure to assign it a new ModuleName relevant to the plugin.
+
+A ModuleScript plugin layout:
+```
+local Plugin = {}
+Plugin.Name = "Your very cool plugin"
+Plugin.Version = {0, 0, 0} --//Change the first two numbers to the appropiate driving, the last one is optional for plugin identification
+Plugin.__index = Plugin
+
+function TrainModule.init(superiorSelf, EventListener)
+	local classSelf = {}
+	setmetatable(classSelf, Plugin)
+
+	--// do work
+
+	return classSelf
+end
+
+return Plugin
+```
