@@ -239,8 +239,8 @@ function TrainModule.new(trainModel, data)
 		end
 		local tempPlayerGui = classSelf["GUI"]:Clone()
 		tempPlayerGui.Parent = tempPlayerStore.PlayerGui
-		classSelf:UnanchorTrain()
 		classSelf["currentDriver"] = tempPlayerStore
+		classSelf:UnanchorTrain()
 		classSelf.Event:Fire("base", {class = classSelf, action = "DriverIn", player = tempPlayerStore, UI = tempPlayerGui})
 	end)
 
