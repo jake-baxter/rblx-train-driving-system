@@ -195,7 +195,7 @@ function TrainModule.new(trainModel, data)
 	if not (typeof(data["GUI"]) == "Instance") then
 		error("GUI needs to be a ScreenGUI instance!")
 	end
-	if not (data["GUI"]:IsA("ScreenGUI")) then
+	if not (data["GUI"]:IsA("ScreenGui")) then
 		error("GUI needs to be a ScreenGUI instance!")
 	end
 
