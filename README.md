@@ -116,6 +116,18 @@ returns `RBXScriptConnection` - Connection that you can connect to for events
 
 returns `RBXScriptConnection` - Connection that you can connect to for events
 
+### ```:UnanchorTrain()``` - Unanchors the train
+
+returns `bool` - Always true
+
+### ```:AnchorTrain()``` - Anchors the train
+
+returns `bool` - Always true
+
+### ```:IsAnchored()``` - Returns if anchored
+
+returns `bool` - Returns if anchored or not.
+
 # Train Input Data
 This systems .new() function relies on a table being inputted as a second argument. These values can be put into the train input data table argument.
 

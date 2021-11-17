@@ -237,6 +237,7 @@ function TrainModule.new(trainModel, data)
 		end
 		local tempPlayerGui = classSelf["GUI"]:Clone()
 		tempPlayerGui.Parent = tempPlayerStore.PlayerGui
+		classSelf:UnanchorTrain()
 		classSelf["currentDriver"] = tempPlayerStore
 		classSelf.Event:Fire("base", {class = classSelf, action = "DriverIn", player = tempPlayerStore, UI = tempPlayerGui})
 	end)
@@ -249,8 +250,8 @@ function TrainModule.new(trainModel, data)
 		classSelf["currentDriver"] = nil
 		classSelf.basePart.BodyVelocity.MaxForce = Vector3.new(0,0,0)
 		classSelf.basePart.BodyVelocity.Velocity = Vector3.new(0,0,0)
-		classSelf.basePart.BodyVelocity.P = 0
 		classSelf.throttle = 0
+		classSelf:AnchorTrain()
 		classSelf.Event:Fire("base", {class = classSelf, action = "DriverOut"})
 	end)
 
