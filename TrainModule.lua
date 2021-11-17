@@ -198,6 +198,8 @@ function TrainModule.new(trainModel, data)
 	if not (data["GUI"]:IsA("ScreenGui")) then
 		error("GUI needs to be a ScreenGUI instance!")
 	end
+	classSelf["GUI"] = data["GUI"]
+
 
 	classSelf.modules = {}
 	if (data["customModules"]) then
@@ -381,10 +383,13 @@ function LocalModule:UnanchorTrain()
 	for _,basePartsUnanchor in pairs(self.trainModel:GetDescendants()) do
 		if basePartsUnanchor:IsA("BasePart") then
 			basePartsUnanchor.Anchored = false
-			basePartsUnanchor:SetNetworkOwnership(self.currentDriver)
+			repeat task.wait() print("Waiting for".. basePartsUnanchor.Name)until basePartsUnanchor:CanSetNetworkOwnership()
+			basePartsUnanchor:SetNetworkOwner(self.currentDriver)
 			self.Anchored = false
 		end
 	end
+	print("Set Network Owner Ship!")
+	self.Anchored = false
 	return true
 end
 
@@ -393,9 +398,9 @@ function LocalModule:AnchorTrain()
 	for _,basePartsUnanchor in pairs(self.trainModel:GetDescendants()) do
 		if basePartsUnanchor:IsA("BasePart") then
 			basePartsUnanchor.Anchored = true
-			self.Anchored = false
 		end
 	end
+	self.Anchored = true
 	return true
 end
 
