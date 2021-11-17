@@ -74,6 +74,7 @@ debounce.touchsliderdown = false
 --//TO EDIT IF NECESARRY
 local setVelocity = function()
     if isReversed == false then
+        print(isReversed)
         --//This uses hhwheats simple driving calculations. Change if you wish.
         local vectorpower = generalPower*basePart.CFrame.lookVector
         basePart["BodyVelocity"].MaxForce = Vector3.new(vectorpower.X>0 and vectorpower.X or -vectorpower.X,
@@ -117,7 +118,6 @@ local function PerformVelocityChanges(delta)
     if basePart.Anchored == true then
         Velocity = 0
     end
-    print(Velocity)
 end
 
 
