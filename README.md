@@ -61,6 +61,7 @@ local newTrain = TrainModule.new(
         "SoundSystemModType": "Loco" -- This is custom and will probably not be sound system setup
     }
 )
+newTrain:UnanchorTrain()
 ```
 
 # Functions
