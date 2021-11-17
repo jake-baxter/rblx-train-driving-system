@@ -33,6 +33,7 @@ local TrainModule = require(game:GetService("ServerStorage"):WaitForChild("Train
 local newTrain = TrainModule.new(
     ...
 )
+newTrain:UnanchorTrain()
 ```
 
 You can then used the returned table by .new()  to call other functions or register RBXScriptConnections
