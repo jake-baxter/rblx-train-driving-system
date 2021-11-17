@@ -132,23 +132,27 @@ UserInputService.InputBegan:connect(function(input)
             return
         end
         targettedThrottle = math.clamp(targettedThrottle + (1/throttle), 0, 1)
+        print("now targetted throttle at: "..targettedThrottle)
     end
     if input.KeyCode == Enum.KeyCode.S then
         if debounce.up then
             return
         end
         targettedThrottle = math.clamp(targettedThrottle - (1/throttle), 0, 1)
+        print("now targetted throttle at: "..targettedThrottle)
     end
     if input.KeyCode == Enum.KeyCode.A then
         if debounce.down then
             return
         end
         targettedBrake = math.clamp(targettedBrake + (1/brake), 0, 1)
+        print("now targetted throttle at: "..targettedBrake)
     end
     if input.KeyCode == Enum.KeyCode.D then
         if debounce.down then
             return
         end
         targettedBrake = math.clamp(targettedBrake - (1/brake), 0, 1)
+        print("now targetted throttle at: "..targettedBrake)
     end
 end)
