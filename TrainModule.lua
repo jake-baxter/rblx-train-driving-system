@@ -2,7 +2,7 @@
 	// **READ-ONLY**
 	// FileName: TrainModule.lua
 	// Written by: Jake Baxter
-	// Version v0.0.0-alpha
+	// Version v0.0.0-alpha.2
 	// Description: An API for train control in roblox.
 
 	// Contributors:
@@ -35,6 +35,7 @@ function TrainModule.new(trainModel, data)
 	classSelf.remoteEvent = nil
 	classSelf.remoteFunction = nil
 	classSelf.Anchored = true
+	classSelf.UIEnabled = true
 	local moduleEvent = Instance.new("BindableEvent")
 	classSelf.Event = moduleEvent
 	classSelf.baseStud = 1
@@ -237,8 +238,11 @@ function TrainModule.new(trainModel, data)
 		if not (tempPlayerStore) then
 			return false
 		end
-		local tempPlayerGui = classSelf["GUI"]:Clone()
-		tempPlayerGui.Parent = tempPlayerStore.PlayerGui
+		local tempPlayerGui
+		if classSelf.UIEnabled then
+			tempPlayerGui = classSelf["GUI"]:Clone()
+			tempPlayerGui.Parent = tempPlayerStore.PlayerGui
+		end
 		classSelf["currentDriver"] = tempPlayerStore
 		classSelf:UnanchorTrain()
 		classSelf.Event:Fire("base", {class = classSelf, action = "DriverIn", player = tempPlayerStore, UI = tempPlayerGui})
@@ -412,6 +416,18 @@ end
 
 function LocalModule:IsAnchored()
 	return self.Anchored
+end
+
+
+function LocalModule:DisableDefaultUI()
+	self.UIEnabled = false
+	return true
+end
+
+
+function LocalModule:EnableDefaultUI()
+	self.UIEnabled = true
+	return true
 end
 
 

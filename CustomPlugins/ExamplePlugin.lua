@@ -1,7 +1,7 @@
 --[[
 	// FileName: ExamplePlugin.lua
 	// Written by: Jake Baxter
-	// Version: v0.0.0-alpha
+	// Version: v0.0.0-alpha.2
 	// Description: This is an example plugin
 
 	// Contributors:

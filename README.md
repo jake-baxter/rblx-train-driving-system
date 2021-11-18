@@ -132,6 +132,14 @@ returns `bool` - Always true
 
 returns `bool` - Returns if anchored or not.
 
+### ```:DisableDefaultUI()``` - Disables the default UI
+
+returns `bool` - Returns true
+
+### ```:EnableDefaultUI``` - Enables the default UI
+
+returns `bool` - Returns true
+
 # Train Input Data
 This systems .new() function relies on a table being inputted as a second argument. These values can be put into the train input data table argument.
 

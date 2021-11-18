@@ -1,0 +1,3 @@
+Plugin.lua to be where ever and named whatever
+
+LocalScript.lua to be renamed to "LocalScript" and parented to location of Plugin.lua

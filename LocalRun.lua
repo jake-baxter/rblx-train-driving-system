@@ -2,7 +2,7 @@
 	// **READ-ONLY**
 	// FileName: LocalRun.lua
 	// Written by: Jake Baxter
-	// Version v0.0.0-alpha
+	// Version v0.0.0-alpha.2
 	// Description: Local Script for Train Control (UI)
 
 	// Contributors:
@@ -144,24 +144,28 @@ UserInputService.InputBegan:connect(function(input)
             return
         end
         targettedThrottle = math.clamp(targettedThrottle + (1/throttle), 0, 1)
+		RemoteClientEvent:FireServer("base", {action = "MovementUpdate", throttle = targettedThrottle, brake = targettedBrake})
     end
     if input.KeyCode == Enum.KeyCode.S then
         if debounce.up then
             return
         end
         targettedThrottle = math.clamp(targettedThrottle - (1/throttle), 0, 1)
+		RemoteClientEvent:FireServer("base", {action = "MovementUpdate", throttle = targettedThrottle, brake = targettedBrake})
     end
     if input.KeyCode == Enum.KeyCode.A then
         if debounce.down then
             return
         end
         targettedBrake = math.clamp(targettedBrake + (1/brake), 0, 1)
+		RemoteClientEvent:FireServer("base", {action = "MovementUpdate", throttle = targettedThrottle, brake = targettedBrake})
     end
     if input.KeyCode == Enum.KeyCode.D then
         if debounce.down then
             return
         end
         targettedBrake = math.clamp(targettedBrake - (1/brake), 0, 1)
+		RemoteClientEvent:FireServer("base", {action = "MovementUpdate", throttle = targettedThrottle, brake = targettedBrake})
     end
 end)
 
