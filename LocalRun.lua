@@ -66,6 +66,7 @@ local isReversed = RawSelf["reversed"]
 local generalPower = RawSelf["MaxPower"]
 local maxSpeed = RawSelf["MaxPower"]
 local baseStud = RawSelf["baseStud"]
+local developerMode = RawSelf["rawData"]["debugMode"]
 
 
 local targettedThrottle = 0
@@ -164,14 +165,25 @@ UserInputService.InputBegan:connect(function(input)
     end
 end)
 
--- Optional options for gui display info
--- Create a frame and name it Hud
--- Create two text labels and name them Throttle & the other Brake
--- Just uncomment below and it will display the throttle & brake levels
---[[
-while true do
-	script.Parent.Hud.Throttle.Text = "Throttle: "..currentThrottle
-	script.Parent.Hud.Brake.Text = "Brake: "..currentBrake
-	wait(.1)
+if (developerMode) then
+	local devModeFrame = Instance.new("Frame", script.Parent)
+	devModeFrame.AnchorPoint = Vector2.new(0,1)
+	devModeFrame.Position = UDim2.new(0,0,1,0)
+	devModeFrame.Size = UDim2.new(0.2,0,0,100)
+	local devModeThrottle = Instance.new("TextLabel", devModeFrame)
+	devModeThrottle.Size = UDim2.new(1,0,0,33)
+	local devModeBrake = Instance.new("TextLabel", devModeFrame)
+	devModeBrake.Size = UDim2.new(1,0,0,33)
+	devModeBrake.Position = UDim2.new(0,0,0,33)
+	local devModeSpeed = Instance.new("TextLabel", devModeFrame)
+	devModeSpeed.Size = UDim2.new(1,0,0,33)
+	devModeSpeed.Position = UDim2.new(0,0,0,66)
+	coroutine.wrap(function()
+		while true do
+			devModeThrottle.Text = "Throttle: "..tostring(currentThrottle).." - "..tostring(targettedThrottle)
+			devModeBrake.Text = "Brake: "..tostring(currentBrake).." - "..tostring(targettedBrake)
+			devModeSpeed.Text = "Speed: "..tostring(Velocity)
+			wait(.1)
+		end
+	end) ()
 end
-]]--
