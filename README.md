@@ -173,6 +173,8 @@ Value will be followed by value type. * means required, " is recommended
 
 `customModules`(table)" - A table of module script references of modules to use, e.g. `{script.SoundSystem, game.ServerStorage.Modules.CustomGUI}`
 
+`developerMode` (bool) - Creates a frame inside the GUI with live train information. (@bobsterjsdev)
+
 # Server Events
 There isn't many server events to currently listen to, but you can use the :GetServerEventConnection() if you really need to.
 

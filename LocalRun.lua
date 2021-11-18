@@ -6,7 +6,7 @@
 	// Description: Local Script for Train Control (UI)
 
 	// Contributors:
-		
+		bobsterjsdev (debug mode)
 	
 
 	// Required by:
