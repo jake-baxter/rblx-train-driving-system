@@ -163,3 +163,15 @@ UserInputService.InputBegan:connect(function(input)
         targettedBrake = math.clamp(targettedBrake - (1/brake), 0, 1)
     end
 end)
+
+-- Optional options for gui display info
+-- Create a frame and name it Hud
+-- Create two text labels and name them Throttle & the other Brake
+-- Just uncomment below and it will display the throttle & brake levels
+--[[
+while true do
+	script.Parent.Hud.Throttle.Text = "Throttle: "..currentThrottle
+	script.Parent.Hud.Brake.Text = "Brake: "..currentBrake
+	wait(.1)
+end
+]]--
