@@ -7,6 +7,16 @@ If you are a programmer wishing to help contribute to this repository, please re
 
 [Click here for a place example](https://www.roblox.com/games/8026502237/v0-0-0-alpha-TrainModule)
 
+# Keyboard Controls in base driving system
+
+`w` Throttle up
+
+`s` Throttle down
+
+`a` Brake up
+
+`d` Brake down
+
 # YouTube Video
 
 To be updated
