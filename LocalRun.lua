@@ -2,7 +2,7 @@
 	// **READ-ONLY**
 	// FileName: LocalRun.lua
 	// Written by: Jake Baxter
-	// Version v0.0.0-alpha.2
+	// Version v0.0.0-alpha.3
 	// Description: Local Script for Train Control (UI)
 
 	// Contributors:
