@@ -5,7 +5,7 @@ If you'd like to get straight on with it, a .rbxm is provided in the releases, b
 
 If you are a programmer wishing to help contribute to this repository, please read down at the bottom of this.
 
-[Click here for a place example](https://www.roblox.com/games/8026502237/v0-0-0-alpha-TrainModule)
+[Click here for a place example](https://www.roblox.com/games/8026502237/v0-0-0-alpha-TrainModule) - This Place is out of date, and should check the rbxl included in releases
 
 # Keyboard Controls in base driving system
 
@@ -105,6 +105,12 @@ returns `bool` - True/False if enabled or not
 `moduleName`  String Value of model name
 
 returns `bool` - True/False if enabled or not
+
+### ```:GetModule(moduleName)``` - Disables a Module
+
+`moduleName`  String Value of model name
+
+returns `table` - Functions and variables the developer of the plugin gives you
 
 ### ```:SendMessage(moduleName, Table)``` - Sends a message server side.
 
@@ -233,21 +239,22 @@ When making your own functions using events make sure to assign it a new ModuleN
 A ModuleScript plugin layout:
 ```
 local Plugin = {}
+Plugin.GloballyAccessible = {}
 Plugin.Name = "Your very cool plugin"
 Plugin.Version = {0, 0, 0} --//Change the first two numbers to the appropiate driving, the last one is optional for plugin identification
 Plugin.__index = Plugin
 
-function Plugin.init(superiorSelf, EventListener)
+function Plugin.GloballyAccessible.init(superiorSelf, EventListener)
 	local classSelf = {}
 	setmetatable(classSelf, Plugin)
 
 	--// do work
 
-	return classSelf
+	return classSelf.GloballyAccessible
 end
 
 
-function Plugin:OnDisable()
+function Plugin.GloballyAccessible:OnDisable()
     if not self then
         return false
     end
@@ -256,6 +263,6 @@ function Plugin:OnDisable()
 
 	return true
 end
-
+Plugin.init = Plugin.GloballyAccessible.init
 return Plugin
 ```

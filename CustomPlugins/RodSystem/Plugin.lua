@@ -9,6 +9,7 @@
 --]]
 
 local Plugin = {}
+Plugin.GloballyAccessible = {}
 Plugin.Name = "RodSystem"
 Plugin.Version = {0, 0, 0} --//Change the first two numbers to the appropiate driving, the last one is optional for plugin identification
 Plugin.__index = Plugin
@@ -26,109 +27,111 @@ local function addMyLocalScript(player, LocalScript)
 		trainGui.Parent = playerGui
 	end
 	localScript.Parent = trainGui
-    return localScript
+	return localScript
 end
 
-function Plugin.init(superiorSelf, EventListener)
+function Plugin.GloballyAccessible.init(superiorSelf, EventListener)
 	local classSelf = {}
 	setmetatable(classSelf, Plugin)
 
 
-    local LocalScriptCopy = script:FindFirstChild("LocalScript")
-    if not LocalScriptCopy then
-        return Plugin
-    end
+	local LocalScriptCopy = script:FindFirstChild("LocalScript")
+	if not LocalScriptCopy then
+		return Plugin
+	end
 
 
-    classSelf.ActiveLocos = {}
+	classSelf.ActiveLocos = {}
 	classSelf.superiorSelf = superiorSelf
-    classSelf.RegisteredFunctions = {}
+	classSelf.RegisteredFunctions = {}
 
 
-    local AddLocoFunc =  superiorSelf:GetServerEventConnection():connect(function(ModuleName, SentData)
-        if not (ModuleName == "RodSystem") then
-            return false
-        end
+	local AddLocoFunc =  superiorSelf:GetServerEventConnection():connect(function(ModuleName, SentData)
+		if not (ModuleName == "RodSystem") then
+			return false
+		end
 
-        if not(type(SentData) == "table") then
-            warn("Incorrect Syntax for rods!")
-            return false
-        end
+		if not(type(SentData) == "table") then
+			warn("Incorrect Syntax for rods!")
+			return false
+		end
 
-        if not (SentData["action"] == "AddLoco") then
-            return false
-        end
+		if not (SentData["action"] == "AddLoco") then
+			return false
+		end
 
-        if not (typeof(SentData["Model"]) == "Instance") then
-		    warn("Set Instance in rods 'Model'!")
-            return false
-	    end
-
-
-        if not (type(SentData["RodValues"]) == "table") then
-		    warn("Set Table As RodValues!")
-            return false
-	    end
-
-        if not (SentData["Model"]["Name"] == "Moving Parts") then
-		    warn("The model of what we're talking about must be called 'Moving Parts' (Rod Script)")
-            return false
-	    end
-
-        if classSelf.ActiveLocos[SentData["Model"]] then
-            return false
-        end
-
-        classSelf.ActiveLocos[SentData["Model"]] = SentData
-
-        for _,InGPlayers in pairs(game.Players:GetChildren()) do
-            local ClonedLocalScript = addMyLocalScript(InGPlayers, LocalScriptCopy)
-            if ClonedLocalScript then
-                ClonedLocalScript:SetAttribute("Data", HttpService:JSONEncode(SentData["RodValues"]))
-                local LocoValue = Instance.new("ObjectValue")
-                LocoValue.Name = "loco"
-                LocoValue.Value = SentData["Model"]
-            end
-        end
+		if not (typeof(SentData["Model"]) == "Instance") then
+			warn("Set Instance in rods 'Model'!")
+			return false
+		end
 
 
-    end)
+		if not (type(SentData["RodValues"]) == "table") then
+			warn("Set Table As RodValues!")
+			return false
+		end
 
-    classSelf.RegisteredFunctions[AddLocoFunc] = true
+		if not (SentData["Model"]["Name"] == "Moving Parts") then
+			warn("The model of what we're talking about must be called 'Moving Parts' (Rod Script)")
+			return false
+		end
+
+		if classSelf.ActiveLocos[SentData["Model"]] then
+			return false
+		end
+
+		classSelf.ActiveLocos[SentData["Model"]] = SentData
+
+		for _,InGPlayers in pairs(game.Players:GetChildren()) do
+			local ClonedLocalScript = addMyLocalScript(InGPlayers, LocalScriptCopy)
+			if ClonedLocalScript then
+				ClonedLocalScript:SetAttribute("Data", HttpService:JSONEncode(SentData["RodValues"]))
+				local LocoValue = Instance.new("ObjectValue")
+				LocoValue.Name = "loco"
+				LocoValue.Value = SentData["Model"]
+				LocoValue.Parent = ClonedLocalScript
+			end
+		end
 
 
-    local PlayerJoined = game.Players.PlayerAdded:connect(function(plr)
-        for MovingPartModels, MovingPartsData in pairs(classSelf.ActiveLocos) do
-            local ClonedLocalScript = addMyLocalScript(plr, LocalScriptCopy)
-            if ClonedLocalScript then
-                ClonedLocalScript:SetAttribute("Data", HttpService:JSONEncode(MovingPartsData["RodValues"]))
-                local LocoValue = Instance.new("ObjectValue")
-                LocoValue.Name = "loco"
-                LocoValue.Value = MovingPartModels
-            end
-        end
-    end)
-    classSelf.RegisteredFunctions[PlayerJoined] = true
+	end)
+
+	classSelf.RegisteredFunctions[AddLocoFunc] = true
 
 
-    
-	return classSelf
+	local PlayerJoined = game.Players.PlayerAdded:connect(function(plr)
+		for MovingPartModels, MovingPartsData in pairs(classSelf.ActiveLocos) do
+			local ClonedLocalScript = addMyLocalScript(plr, LocalScriptCopy)
+			if ClonedLocalScript then
+				ClonedLocalScript:SetAttribute("Data", HttpService:JSONEncode(MovingPartsData["RodValues"]))
+				local LocoValue = Instance.new("ObjectValue")
+				LocoValue.Name = "loco"
+				LocoValue.Value = MovingPartModels
+				LocoValue.Parent = ClonedLocalScript
+			end
+		end
+	end)
+	classSelf.RegisteredFunctions[PlayerJoined] = true
+
+
+
+	return classSelf.GloballyAccessible
 end
 
 
-function Plugin:OnDisable()
-    if not self then
-        return false
-    end
+function Plugin.GloballyAccessible:OnDisable()
+	if not self then
+		return false
+	end
 
-    for functionsToDisable, _ in pairs(self.RegisteredFunctions) do
-        if (typeof(functionsToDisable) == "function") then
-            functionsToDisable:Disconnect()
-        end
-    end
-
+	for functionsToDisable, _ in pairs(self.RegisteredFunctions) do
+		if (typeof(functionsToDisable) == "function") then
+			functionsToDisable:Disconnect()
+		end
+	end
 	return true
 end
 
+Plugin.init = Plugin.GloballyAccessible.init
 
 return Plugin
