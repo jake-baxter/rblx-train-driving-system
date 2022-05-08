@@ -44,7 +44,7 @@ function Plugin.init(superiorSelf, EventListener)
         trainUi.Parent = PlayerGui
         LocalScriptCopy:Clone().Parent = trainUi
     end)
-
+    superiorSelf.UIEnabled = false
 	return classSelf
 end
 
