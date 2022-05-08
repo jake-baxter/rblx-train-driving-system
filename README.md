@@ -7,6 +7,16 @@ If you are a programmer wishing to help contribute to this repository, please re
 
 [Click here for a place example](https://www.roblox.com/games/8026502237/v0-0-0-alpha-TrainModule)
 
+# Keyboard Controls in base driving system
+
+`w` Throttle up
+
+`s` Throttle down
+
+`a` Brake up
+
+`d` Brake down
+
 # YouTube Video
 
 To be updated
@@ -132,6 +142,14 @@ returns `bool` - Always true
 
 returns `bool` - Returns if anchored or not.
 
+### ```:DisableDefaultUI()``` - Disables the default UI
+
+returns `bool` - Returns true
+
+### ```:EnableDefaultUI``` - Enables the default UI
+
+returns `bool` - Returns true
+
 # Train Input Data
 This systems .new() function relies on a table being inputted as a second argument. These values can be put into the train input data table argument.
 
@@ -172,6 +190,8 @@ Value will be followed by value type. * means required, " is recommended
 `GUI`(object)* - ScreenGUI object to work the train.
 
 `customModules`(table)" - A table of module script references of modules to use, e.g. `{script.SoundSystem, game.ServerStorage.Modules.CustomGUI}`
+
+`developerMode` (bool) - Creates a frame inside the GUI with live train information. @bobsterjsdev
 
 # Server Events
 There isn't many server events to currently listen to, but you can use the :GetServerEventConnection() if you really need to.

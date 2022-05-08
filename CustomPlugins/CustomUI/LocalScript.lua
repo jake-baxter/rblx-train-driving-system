@@ -1,20 +1,13 @@
 --[[
-	// **READ-ONLY**
-	// FileName: LocalRun.lua
+	// FileName: LocalScript.lua
 	// Written by: Jake Baxter
-	// Version v0.0.0-alpha.2
-	// Description: Local Script for Train Control (UI)
+	// Version: v0.0.0-alpha.2
+	// Description: CustomUI builder locally
 
 	// Contributors:
-		bobsterjsdev (debug mode)
-	
-
-	// Required by:
-		Local Players
-
-	// Note: LOCAL SCRIPTS ONLY.
+        bobsterjsdev (debug mode)
+        
 --]]
-
 
 --//Variables
 local VehicleSeat = game.Players.LocalPlayer.Character.Humanoid.SeatPart
