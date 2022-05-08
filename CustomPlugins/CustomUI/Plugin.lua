@@ -18,15 +18,15 @@ function Plugin.init(superiorSelf, EventListener)
 	setmetatable(classSelf, Plugin)
 
 
-    local LocalScriptCopy
-    if LocalScriptCopy then
+    local LocalScriptCopy = script:FindFirstChild("LocalScript")
+    if not LocalScriptCopy then
         return Plugin
     end
 
 	classSelf.superiorSelf = superiorSelf
     classSelf.RegisteredFunctions = {}
 
-    superiorSelf:GetServerEventConnection():connect(function(ModuleName, SentData)
+    table.insert(classSelf.RegisteredFunctions, superiorSelf:GetServerEventConnection():connect(function(ModuleName, SentData)
         if ModuleName == "base" then
             return false
         end
@@ -43,7 +43,7 @@ function Plugin.init(superiorSelf, EventListener)
         trainUi.ResetOnSpawn = false
         trainUi.Parent = PlayerGui
         LocalScriptCopy:Clone().Parent = trainUi
-    end)
+    end))
     superiorSelf.UIEnabled = false
 	return classSelf
 end
@@ -59,7 +59,9 @@ function Plugin:OnDisable()
             functionsToDisable:Disconnect()
         end
     end
-
+    if not self.superiorSelf.UIEnabled then
+        self.superiorSelf.UIEnabled = true
+    end
 	return true
 end
 
