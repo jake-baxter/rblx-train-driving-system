@@ -1,7 +1,7 @@
 --[[
 	// FileName: ExamplePlugin.lua
 	// Written by: Jake Baxter
-	// Version: v0.0.0-alpha.2
+	// Version: v0.0.0-alpha.3
 	// Description: This is an example plugin
 
 	// Contributors:
@@ -11,11 +11,12 @@
 --]]
 
 local Plugin = {}
+Plugin.GloballyAccessible = {}
 Plugin.Name = "Example"
 Plugin.Version = {0, 0, 1} --//Change the first two numbers to the appropiate driving, the last one is optional for plugin identification
 Plugin.__index = Plugin
 
-function Plugin.init(superiorSelf, EventListener)
+function Plugin.GloballyAccessible.init(superiorSelf, EventListener)
 	local classSelf = {}
 	setmetatable(classSelf, Plugin)
 
@@ -29,11 +30,11 @@ function Plugin.init(superiorSelf, EventListener)
         end
     end)
 
-	return classSelf
+	return classSelf.GloballyAccessible
 end
 
 
-function Plugin:OnDisable()
+function Plugin.GloballyAccessible:OnDisable()
     if not self then
         return false
     end
@@ -42,6 +43,6 @@ function Plugin:OnDisable()
 
 	return true
 end
-
+Plugin.init = Plugin.GloballyAccessible.init
 
 return Plugin

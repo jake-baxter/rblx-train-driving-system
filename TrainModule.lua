@@ -328,6 +328,14 @@ function LocalModule:DisableModule(moduleName)
 	return false
 end
 
+function LocalModule:GetModule(moduleName)
+	for _,scriptReference in pairs(self.modules) do
+		if (scriptReference.name == moduleName) then
+			return scriptReference.required
+		end
+		return nil
+	end
+end
 
 function LocalModule:ForceReverse()
 	if self.revBasePart then
@@ -389,7 +397,7 @@ function LocalModule:UnanchorTrain()
 			basePartsUnanchor.Anchored = false
 		end
 	end
-	
+
 	for _,basePartsUnanchor in pairs(self.trainModel:GetDescendants()) do
 		if basePartsUnanchor:IsA("BasePart") then
 			if basePartsUnanchor:CanSetNetworkOwnership() then
@@ -397,7 +405,7 @@ function LocalModule:UnanchorTrain()
 			end
 		end
 	end
-	
+
 	self.Anchored = false
 	return true
 end
