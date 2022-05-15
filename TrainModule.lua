@@ -56,15 +56,15 @@ function TrainModule.new(trainModel, data)
 	classSelf.Properties.remoteEvent = tempRemoteEvent
 
 
-	assert(data["basePart"], "Include Base Part Object Reference")
-	if not (data["basePart"]:IsA("BasePart") or type(data["basePart"]) == "table") then
+	assert(data["baseParts"], "Include Base Part Object Reference")
+	if not (data["baseParts"]:IsA("BasePart") or type(data["baseParts"]) == "table") then
 		error("Base part must include your running base part!")
 	end
-	if data["basePart"]:IsA("BasePart") then
-		classSelf.Properties.baseParts = {data["basePart"]}
+	if data["baseParts"]:IsA("BasePart") then
+		classSelf.Properties.baseParts = {data["baseParts"]}
 	end
-	if type(data["basePart"]) == "table" then
-		classSelf.Properties.baseParts = data["basePart"]
+	if type(data["baseParts"]) == "table" then
+		classSelf.Properties.baseParts = data["baseParts"]
 	end
 	classSelf:IterateBodyVelocity(function(mover)
 		if not data["MoverType"] then
