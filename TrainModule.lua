@@ -56,44 +56,49 @@ function TrainModule.new(trainModel, data)
 
 
 	assert(data["basePart"], "Include Base Part Object Reference")
-	if not (data["basePart"]:IsA("BasePart")) then
+	if not (data["basePart"]:IsA("BasePart") or type(data["basePart"]) == "table") then
 		error("Base part must include your running base part!")
 	end
-	classSelf.basePart = data["basePart"]
-	if not data["MoverType"] then
-		Instance.new("BodyVelocity", classSelf.basePart)
-		classSelf.basePart.BodyVelocity.MaxForce = Vector3.new(0,0,0)
-		classSelf.basePart.BodyVelocity.Velocity = Vector3.new(0,0,0)
-		classSelf.basePart.BodyVelocity.P = 1250
-		classSelf["MoverType"] = "BodyVelocity"
+	if data["basePart"]:IsA("BasePart") then
+		classSelf.baseParts = {data["basePart"]}
 	end
-	if data["MoverType"] == "BodyVelocity" then
-		Instance.new("BodyVelocity", classSelf.basePart)
-		classSelf.basePart.BodyVelocity.MaxForce = Vector3.new(0,0,0)
-		classSelf.basePart.BodyVelocity.Velocity = Vector3.new(0,0,0)
-		classSelf.basePart.BodyVelocity.P = 1250
-		classSelf["MoverType"] = "BodyVelocity"
+	if type(data["basePart"]) == "table" then
+		classSelf.baseParts = data["basePart"]
 	end
-	if data["MoverType"] == "BaseVelocity" then
-		classSelf["MoverType"] = "BaseVelocity"
+	for _,BodyMover in pairs(classSelf.baseParts) do
+		if not data["MoverType"] then
+			Instance.new("BodyVelocity", BodyMover)
+			BodyMover.BodyVelocity.MaxForce = Vector3.new(0,0,0)
+			BodyMover.BodyVelocity.Velocity = Vector3.new(0,0,0)
+			BodyMover.BodyVelocity.P = 1250
+			classSelf["MoverType"] = "BodyVelocity"
+		end
+		if data["MoverType"] == "BodyVelocity" then
+			Instance.new("BodyVelocity", BodyMover)
+			BodyMover.BodyVelocity.MaxForce = Vector3.new(0,0,0)
+			BodyMover.BodyVelocity.Velocity = Vector3.new(0,0,0)
+			BodyMover.BodyVelocity.P = 1250
+			classSelf["MoverType"] = "BodyVelocity"
+		end
+		if data["MoverType"] == "BaseVelocity" then
+			classSelf["MoverType"] = "BaseVelocity"
+		end
+		if data["MoverType"] == "LinearVelocity" then
+			classSelf["MoverType"] = "LinearVelocity"
+		end
 	end
-	if data["MoverType"] == "LinearVelocity" then
-		classSelf["MoverType"] = "LinearVelocity"
-	end
+
 	
 
 
-	if (data["revBasePart"]) then
-		if (data["revBasePart"]:IsA("BasePart")) then
-			classSelf.revBasePart = data["revBasePart"]
-			if (data["revVehicleSeat"]) then
-				if (data["revVehicleSeat"]:IsA("VehicleSeat")) then
-					classSelf.canReverse = true
-					classSelf.revVehicleSeat = data["revVehicleSeat"]
-				end
-			end
+	if (data["revVehicleSeat"]) then
+		if (data["revVehicleSeat"]:IsA("VehicleSeat")) then
+			classSelf.canReverse = true
+			classSelf.revVehicleSeat = data["revVehicleSeat"]
 		end
 	end
+
+
 	assert(data["throttle"], "Include Throttle Value")
 	if not (typeof(data["throttle"]) == "number" and math.floor(data["throttle"]) == data["throttle"]) then
 		error("Throttle must be an integer!")
@@ -355,7 +360,7 @@ function LocalModule:GetModule(moduleName)
 end
 
 function LocalModule:ForceReverse()
-	if self.revBasePart then
+	if self.canReverse then
 		if self.reversed == false then
 			self.reversed = true
 			local seat = self.vehicleSeat

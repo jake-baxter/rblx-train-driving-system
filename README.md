@@ -167,11 +167,9 @@ Value will be followed by value type. * means required, " is recommended
 
 `basePart`(object)* - Object value that controls train movement (BodyVelocity will be made by system automatically)
 
-`revBasePart`(object - nil) - Object value that controls train movement when reversed (BodyVelocity will be made by system automatically)
-
 `vehicleSeat`(object)* - Object value to seat or vehicle seat to sit in
 
-`revVehicleSeat`(object - nil) - Object value to reversible seat or vehicle seat to sit in
+`revVehicleSeat`(object - nil) - Object value to reversible seat or vehicle seat to sit in 
 
 `throttle`(int)* - Throttle Notches
 
