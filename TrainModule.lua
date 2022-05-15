@@ -270,7 +270,7 @@ function TrainModule.new(trainModel, data)
 		end
 		classSelf["currentDriver"] = tempPlayerStore
 		classSelf:UnanchorTrain()
-		classSelf.Properties.Event:Fire("base", {class = classSelf, action = "DriverIn", player = tempPlayerStore, UI = tempPlayerGui})
+		classSelf.Properties.Event:Fire("base", {class = classSelf.Properties, action = "DriverIn", player = tempPlayerStore, UI = tempPlayerGui})
 	end)
 
 
@@ -285,7 +285,7 @@ function TrainModule.new(trainModel, data)
 		end)
 		classSelf.Properties.throttle = 0
 		classSelf:AnchorTrain()
-		classSelf.Properties.Event:Fire("base", {class = classSelf, action = "DriverOut"})
+		classSelf.Properties.Event:Fire("base", {class = classSelf.Properties, action = "DriverOut"})
 	end)
 
 
@@ -296,11 +296,11 @@ function TrainModule.new(trainModel, data)
 		if not (type(TableR) == "table") then
 			return false
 		end
-		if not (player == classSelf.currentDriver) then
+		if not (player == classSelf.Properties.currentDriver) then
 			return false
 		end
-		classSelf.Properties.remoteEvent:FireClient(player, moduleName, classSelf)
-		classSelf.Properties.Event:Fire("base", {class = classSelf, action = "ClientRegistered", player = player})
+		classSelf.Properties.remoteEvent:FireClient(player, moduleName, classSelf.Properties)
+		classSelf.Properties.Event:Fire("base", {class = classSelf.Properties, action = "ClientRegistered", player = player})
 	end)
 
 
