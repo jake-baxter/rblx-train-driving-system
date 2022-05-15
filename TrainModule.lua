@@ -27,20 +27,21 @@ LocalModule.__index = LocalModule
 function TrainModule.new(trainModel, data)
 	local classSelf = {}
 	setmetatable(classSelf, LocalModule)
-	classSelf.trainModel = trainModel
-	classSelf.rawData = data
-	classSelf.currentDriver = nil
-	classSelf.reversed = false
-	classSelf.canReverse = false
-	classSelf.remoteEvent = nil
-	classSelf.remoteFunction = nil
-	classSelf.Anchored = true
-	classSelf.UIEnabled = true
+	classSelf.Properties = {}
+	classSelf.Properties.trainModel = trainModel
+	classSelf.Properties.rawData = data
+	classSelf.Properties.currentDriver = nil
+	classSelf.Properties.reversed = false
+	classSelf.Properties.canReverse = false
+	classSelf.Properties.remoteEvent = nil
+	classSelf.Properties.remoteFunction = nil
+	classSelf.Properties.Anchored = true
+	classSelf.Properties.UIEnabled = true
 	local moduleEvent = Instance.new("BindableEvent")
-	classSelf.Event = moduleEvent
-	classSelf.baseStud = 1
+	classSelf.Properties.Event = moduleEvent
+	classSelf.Properties.baseStud = 1
 	if not data["baseStud"] then
-		classSelf.baseStud = data["baseStud"]
+		classSelf.Properties.baseStud = data["baseStud"]
 	end
 
 
@@ -48,11 +49,11 @@ function TrainModule.new(trainModel, data)
 	if not (data["vehicleSeat"]:IsA("VehicleSeat") or data["vehicleSeat"]:IsA("Seat")) then
 		error("VehicleSeat must be a vehicle seat (Duh)!")
 	end
-	classSelf.vehicleSeat = data["vehicleSeat"]
+	classSelf.Properties.vehicleSeat = data["vehicleSeat"]
 	local tempRemoteEvent = Instance.new("RemoteEvent")
 	tempRemoteEvent.Parent = data["vehicleSeat"]
 	tempRemoteEvent.Name = "PlayerRemoteEvent"
-	classSelf.remoteEvent = tempRemoteEvent
+	classSelf.Properties.remoteEvent = tempRemoteEvent
 
 
 	assert(data["basePart"], "Include Base Part Object Reference")
@@ -60,24 +61,24 @@ function TrainModule.new(trainModel, data)
 		error("Base part must include your running base part!")
 	end
 	if data["basePart"]:IsA("BasePart") then
-		classSelf.baseParts = {data["basePart"]}
+		classSelf.Properties.baseParts = {data["basePart"]}
 	end
 	if type(data["basePart"]) == "table" then
-		classSelf.baseParts = data["basePart"]
+		classSelf.Properties.baseParts = data["basePart"]
 	end
-	for _,BodyMover in pairs(classSelf.baseParts) do
+	classSelf:IterateBodyVelocity(function(mover)
 		if not data["MoverType"] then
-			Instance.new("BodyVelocity", BodyMover)
-			BodyMover.BodyVelocity.MaxForce = Vector3.new(0,0,0)
-			BodyMover.BodyVelocity.Velocity = Vector3.new(0,0,0)
-			BodyMover.BodyVelocity.P = 1250
+			Instance.new("BodyVelocity", mover)
+			mover.MaxForce = Vector3.new(0,0,0)
+			mover.Velocity = Vector3.new(0,0,0)
+			mover.P = 1250
 			classSelf["MoverType"] = "BodyVelocity"
 		end
 		if data["MoverType"] == "BodyVelocity" then
-			Instance.new("BodyVelocity", BodyMover)
-			BodyMover.BodyVelocity.MaxForce = Vector3.new(0,0,0)
-			BodyMover.BodyVelocity.Velocity = Vector3.new(0,0,0)
-			BodyMover.BodyVelocity.P = 1250
+			Instance.new("BodyVelocity", mover)
+			mover.MaxForce = Vector3.new(0,0,0)
+			mover.Velocity = Vector3.new(0,0,0)
+			mover.P = 1250
 			classSelf["MoverType"] = "BodyVelocity"
 		end
 		if data["MoverType"] == "BaseVelocity" then
@@ -86,15 +87,15 @@ function TrainModule.new(trainModel, data)
 		if data["MoverType"] == "LinearVelocity" then
 			classSelf["MoverType"] = "LinearVelocity"
 		end
-	end
+	end)
 
 	
 
 
 	if (data["revVehicleSeat"]) then
 		if (data["revVehicleSeat"]:IsA("VehicleSeat")) then
-			classSelf.canReverse = true
-			classSelf.revVehicleSeat = data["revVehicleSeat"]
+			classSelf.Properties.canReverse = true
+			classSelf.Properties.revVehicleSeat = data["revVehicleSeat"]
 		end
 	end
 
@@ -106,7 +107,7 @@ function TrainModule.new(trainModel, data)
 	if data["throttle"] < 1 then
 		error("Throttle must be greater to or 1!")
 	end
-	classSelf.throttle = data["throttle"]
+	classSelf.Properties.throttle = data["throttle"]
 
 
 	assert(data["brake"], "Include Brake Value")
@@ -116,7 +117,7 @@ function TrainModule.new(trainModel, data)
 	if data["brake"] < 1 then
 		error("Brake must be greater to or 1!")
 	end
-	classSelf.brake = data["brake"]
+	classSelf.Properties.brake = data["brake"]
 
 
 	assert(data["throttlePower"], "Include Throttle Power Value")
@@ -126,7 +127,7 @@ function TrainModule.new(trainModel, data)
 	if data["throttlePower"] < 0 then
 		error("Throttle Power must be greater than 0!")
 	end
-	classSelf.throttlePower = data["throttlePower"]
+	classSelf.Properties.throttlePower = data["throttlePower"]
 
 
 	assert(data["brakePower"], "Include Throttle Power Value")
@@ -136,7 +137,7 @@ function TrainModule.new(trainModel, data)
 	if data["brakePower"] < 0 then
 		error("Brake Power must be greater than 0!")
 	end
-	classSelf.brakePower = data["brakePower"]
+	classSelf.Properties.brakePower = data["brakePower"]
 
 
 	assert(data["throttleFullTime"], "Include Throttle Up Time Value")
@@ -146,7 +147,7 @@ function TrainModule.new(trainModel, data)
 	if data["throttleFullTime"] < 0 then
 		error("Throttle Up Time must be greater than 0!")
 	end
-	classSelf.throttleFullTime = data["throttleFullTime"]
+	classSelf.Properties.throttleFullTime = data["throttleFullTime"]
 
 
 	assert(data["throttleIdleTime"], "Include Throttle Down Time Value")
@@ -156,7 +157,7 @@ function TrainModule.new(trainModel, data)
 	if data["throttleIdleTime"] < 0 then
 		error("Throttle Down Time must be greater than 0!")
 	end
-	classSelf.throttleIdleTime = data["throttleIdleTime"]
+	classSelf.Properties.throttleIdleTime = data["throttleIdleTime"]
 
 
 
@@ -167,7 +168,7 @@ function TrainModule.new(trainModel, data)
 	if data["brakeFullTime"] < 0 then
 		error("Brake Up Time must be greater than 0!")
 	end
-	classSelf.brakeFullTime = data["brakeFullTime"]
+	classSelf.Properties.brakeFullTime = data["brakeFullTime"]
 
 
 	assert(data["brakeIdleTime"], "Brake Throttle Down Time Value")
@@ -177,7 +178,7 @@ function TrainModule.new(trainModel, data)
 	if data["brakeIdleTime"] < 0 then
 		error("Brake Down Time must be greater than 0!")
 	end
-	classSelf.brakeIdleTime = data["brakeIdleTime"]
+	classSelf.Properties.brakeIdleTime = data["brakeIdleTime"]
 
 
 	assert(data["maxSpeed"], "maxSpeed Value")
@@ -187,7 +188,7 @@ function TrainModule.new(trainModel, data)
 	if data["maxSpeed"] < 0 then
 		error("maxSpeed must be greater than 0!")
 	end
-	classSelf.maxSpeed = data["maxSpeed"]
+	classSelf.Properties.maxSpeed = data["maxSpeed"]
 
 
 	if (data["bodyVelocityP"]) then
@@ -197,12 +198,12 @@ function TrainModule.new(trainModel, data)
 		if data["throttle"] < 1 then
 			error("bodyVelocityP must be greater to or 1!")
 		end
-		classSelf.bodyVelocityP = data["bodyVelocityP"]
-		classSelf.basePart.BodyVelocity.P = data["bodyVelocityP"]
+		classSelf.Properties.bodyVelocityP = data["bodyVelocityP"]
+		classSelf.Properties.basePart.BodyVelocity.P = data["bodyVelocityP"]
 	end
 
 
-	classSelf.MaxPower = 100000
+	classSelf.Properties.MaxPower = 100000
 	if (data["MaxPower"]) then
 		if not (typeof(data["MaxPower"]) == "number" and math.floor(data["MaxPower"]) == data["MaxPower"]) then
 			error("MaxPower must be an integer!")
@@ -210,7 +211,7 @@ function TrainModule.new(trainModel, data)
 		if data["throttle"] < 1 then
 			error("MaxPower must be greater to or 1!")
 		end
-		classSelf.MaxPower = data["MaxPower"]
+		classSelf.Properties.MaxPower = data["MaxPower"]
 	end
 
 
@@ -249,7 +250,7 @@ function TrainModule.new(trainModel, data)
 	classSelf.functions = {}
 
 
-	classSelf.functions.SeatRegister = classSelf.vehicleSeat.ChildAdded:connect(function(child)
+	classSelf.functions.SeatRegister = classSelf.Properties.vehicleSeat.ChildAdded:connect(function(child)
 		if not (child.Name == "SeatWeld") then
 			return false
 		end
@@ -261,30 +262,30 @@ function TrainModule.new(trainModel, data)
 			return false
 		end
 		local tempPlayerGui
-		if classSelf.UIEnabled then
+		if classSelf.Properties.UIEnabled then
 			tempPlayerGui = classSelf["GUI"]:Clone()
 			tempPlayerGui.Parent = tempPlayerStore.PlayerGui
 		end
 		classSelf["currentDriver"] = tempPlayerStore
 		classSelf:UnanchorTrain()
-		classSelf.Event:Fire("base", {class = classSelf, action = "DriverIn", player = tempPlayerStore, UI = tempPlayerGui})
+		classSelf.Properties.Event:Fire("base", {class = classSelf, action = "DriverIn", player = tempPlayerStore, UI = tempPlayerGui})
 	end)
 
 
-	classSelf.functions.SeatUnRegister = classSelf.vehicleSeat.ChildRemoved:connect(function(child)
+	classSelf.functions.SeatUnRegister = classSelf.Properties.vehicleSeat.ChildRemoved:connect(function(child)
 		if not (child.Name == "SeatWeld") then
 			return false
 		end
 		classSelf["currentDriver"] = nil
 		classSelf.basePart.BodyVelocity.MaxForce = Vector3.new(0,0,0)
 		classSelf.basePart.BodyVelocity.Velocity = Vector3.new(0,0,0)
-		classSelf.throttle = 0
+		classSelf.Properties.throttle = 0
 		classSelf:AnchorTrain()
-		classSelf.Event:Fire("base", {class = classSelf, action = "DriverOut"})
+		classSelf.Properties.Event:Fire("base", {class = classSelf, action = "DriverOut"})
 	end)
 
 
-	classSelf.functions.clientregister = classSelf.remoteEvent.OnServerEvent:connect(function(player, moduleName, TableR)
+	classSelf.functions.clientregister = classSelf.Properties.remoteEvent.OnServerEvent:connect(function(player, moduleName, TableR)
 		if not (moduleName == "Register") then
 			return false
 		end
@@ -294,8 +295,8 @@ function TrainModule.new(trainModel, data)
 		if not (player == classSelf.currentDriver) then
 			return false
 		end
-		classSelf.remoteEvent:FireClient(player, moduleName, classSelf)
-		classSelf.Event:Fire("base", {class = classSelf, action = "ClientRegistered", player = player})
+		classSelf.Properties.remoteEvent:FireClient(player, moduleName, classSelf)
+		classSelf.Properties.Event:Fire("base", {class = classSelf, action = "ClientRegistered", player = player})
 	end)
 
 
@@ -314,7 +315,7 @@ end
 
 
 function LocalModule:GetDriver()
-	return self.currentDriver
+	return self.Properties.currentDriver
 end
 
 
@@ -329,7 +330,7 @@ function LocalModule:EnableModule(moduleReference)
 	if not (tempScriptReferenceRequire.Version[1] == TrainModule.Version[1]) then
 		return false
 	end
-	local tempScriptInit = tempScriptReferenceRequire.init(self, self.Event)
+	local tempScriptInit = tempScriptReferenceRequire.init(self, self.Properties.Event)
 	table.insert(self.modules, {required = tempScriptInit, name = tempScriptReferenceRequire.Name})
 	return true
 end
@@ -360,27 +361,27 @@ function LocalModule:GetModule(moduleName)
 end
 
 function LocalModule:ForceReverse()
-	if self.canReverse then
-		if self.reversed == false then
-			self.reversed = true
-			local seat = self.vehicleSeat
-			if self.revVehicleSeat then
-				seat = self.revVehicleSeat
+	if self.Properties.canReverse then
+		if self.Properties.reversed == false then
+			self.Properties.reversed = true
+			local seat = self.Properties.vehicleSeat
+			if self.Properties.revVehicleSeat then
+				seat = self.Properties.revVehicleSeat
 			end
 			self:SendPlayerMessage("base", {
 				action = "reversed",
 				seat = seat
 			})
-			self.Event:Fire("base", {class = self, action = "Reversed", seat = seat})
+			self.Properties.Event:Fire("base", {class = self, action = "Reversed", seat = seat})
 			return true
 		end
-		if self.reversed == true then
-			self.reversed = false
+		if self.Properties.reversed == true then
+			self.Properties.reversed = false
 			self:SendPlayerMessage("base", {
 				action = "reversed",
 				seat = self.vehicleSeat
 			})
-			self.Event:Fire("base", {class = self, action = "Reversed", seat = self.vehicleSeat})
+			self.Properties.Event:Fire("base", {class = self, action = "Reversed", seat = self.vehicleSeat})
 			return true
 		end
 	end
@@ -389,14 +390,14 @@ end
 
 
 function LocalModule:SendMessage(moduleName, Table)
-	self.Event:Fire(moduleName, Table)
+	self.Properties.Event:Fire(moduleName, Table)
 	return true
 end
 
 
 function LocalModule:SendPlayerMessage(moduleName, Table)
-	if self.remoteEvent and self.currentDriver then
-		self.remoteEvent:Fire(self.currentDriver, moduleName, self, Table)
+	if self.Properties.remoteEvent and self.Properties.currentDriver then
+		self.Properties.remoteEvent:Fire(self.Properties.currentDriver, moduleName, self, Table)
 		return true
 	end
 	return false
@@ -404,60 +405,81 @@ end
 
 
 function LocalModule:GetClientEventConnection()
-	return self.remoteEvent.OnServerEvent
+	return self.Properties.remoteEvent.OnServerEvent
 end
 
 
 function LocalModule:GetServerEventConnection()
-	return self.Event.Event
+	return self.Properties.Event.Event
 end
 
 
 function LocalModule:UnanchorTrain()
-	for _,basePartsUnanchor in pairs(self.trainModel:GetDescendants()) do
+	for _,basePartsUnanchor in pairs(self.Properties.trainModel:GetDescendants()) do
 		if basePartsUnanchor:IsA("BasePart") then
-			basePartsUnanchor.Anchored = false
+			basePartsUnanchor.Properties.Anchored = false
 		end
 	end
 
-	for _,basePartsUnanchor in pairs(self.trainModel:GetDescendants()) do
+	for _,basePartsUnanchor in pairs(self.Properties.trainModel:GetDescendants()) do
 		if basePartsUnanchor:IsA("BasePart") then
 			if basePartsUnanchor:CanSetNetworkOwnership() then
-				basePartsUnanchor:SetNetworkOwner(self.currentDriver)
+				basePartsUnanchor:SetNetworkOwner(self.Properties.currentDriver)
 			end
 		end
 	end
 
-	self.Anchored = false
+	self.Properties.Anchored = false
 	return true
 end
 
 
 function LocalModule:AnchorTrain()
-	for _,basePartsUnanchor in pairs(self.trainModel:GetDescendants()) do
+	for _,basePartsUnanchor in pairs(self.Properties.trainModel:GetDescendants()) do
 		if basePartsUnanchor:IsA("BasePart") then
-			basePartsUnanchor.Anchored = true
+			basePartsUnanchor.Properties.Anchored = true
 		end
 	end
-	self.Anchored = true
+	self.Properties.Anchored = true
 	return true
 end
 
 
 function LocalModule:IsAnchored()
-	return self.Anchored
+	return self.Properties.Anchored
 end
 
 
 function LocalModule:DisableDefaultUI()
-	self.UIEnabled = false
+	self.Properties.UIEnabled = false
 	return true
 end
 
 
 function LocalModule:EnableDefaultUI()
-	self.UIEnabled = true
+	self.Properties.UIEnabled = true
 	return true
+end
+
+function LocalModule:IterateBodyVelocity(BodyVelFunc)
+	if not self then
+		return false
+	end
+	if not self.Properties.baseParts then
+		return false
+	end
+	if not BodyVelFunc then
+		return false
+	end
+	for _,basePart in pairs(self.Properties.baseParts) do
+		if basePart:FindFirstChild("BodyVelocity") then
+			BodyVelFunc(basePart:FindFirstChild("BodyVelocity"))
+		end
+	end
+end
+
+function LocalModule:GetProperty(property)
+	return self.Properties[property]
 end
 
 
