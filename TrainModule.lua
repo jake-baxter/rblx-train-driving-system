@@ -60,10 +60,27 @@ function TrainModule.new(trainModel, data)
 		error("Base part must include your running base part!")
 	end
 	classSelf.basePart = data["basePart"]
-	Instance.new("BodyVelocity", classSelf.basePart)
-	classSelf.basePart.BodyVelocity.MaxForce = Vector3.new(0,0,0)
-	classSelf.basePart.BodyVelocity.Velocity = Vector3.new(0,0,0)
-	classSelf.basePart.BodyVelocity.P = 1250
+	if not data["MoverType"] then
+		Instance.new("BodyVelocity", classSelf.basePart)
+		classSelf.basePart.BodyVelocity.MaxForce = Vector3.new(0,0,0)
+		classSelf.basePart.BodyVelocity.Velocity = Vector3.new(0,0,0)
+		classSelf.basePart.BodyVelocity.P = 1250
+		classSelf["MoverType"] = "BodyVelocity"
+	end
+	if data["MoverType"] == "BodyVelocity" then
+		Instance.new("BodyVelocity", classSelf.basePart)
+		classSelf.basePart.BodyVelocity.MaxForce = Vector3.new(0,0,0)
+		classSelf.basePart.BodyVelocity.Velocity = Vector3.new(0,0,0)
+		classSelf.basePart.BodyVelocity.P = 1250
+		classSelf["MoverType"] = "BodyVelocity"
+	end
+	if data["MoverType"] == "BaseVelocity" then
+		classSelf["MoverType"] = "BaseVelocity"
+	end
+	if data["MoverType"] == "LinearVelocity" then
+		classSelf["MoverType"] = "LinearVelocity"
+	end
+	
 
 
 	if (data["revBasePart"]) then
