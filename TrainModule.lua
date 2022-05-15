@@ -222,7 +222,7 @@ function TrainModule.new(trainModel, data)
 	if not (data["GUI"]:IsA("ScreenGui")) then
 		error("GUI needs to be a ScreenGUI instance!")
 	end
-	classSelf["GUI"] = data["GUI"]
+	classSelf.Properties["GUI"] = data["GUI"]
 
 
 	classSelf.modules = {}
@@ -263,7 +263,7 @@ function TrainModule.new(trainModel, data)
 		end
 		local tempPlayerGui
 		if classSelf.Properties.UIEnabled then
-			tempPlayerGui = classSelf["GUI"]:Clone()
+			tempPlayerGui = classSelf.Properties["GUI"]:Clone()
 			tempPlayerGui.Parent = tempPlayerStore.PlayerGui
 		end
 		classSelf["currentDriver"] = tempPlayerStore
