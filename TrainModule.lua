@@ -199,7 +199,9 @@ function TrainModule.new(trainModel, data)
 			error("bodyVelocityP must be greater to or 1!")
 		end
 		classSelf.Properties.bodyVelocityP = data["bodyVelocityP"]
-		classSelf.Properties.basePart.BodyVelocity.P = data["bodyVelocityP"]
+		classSelf:IterateBodyVelocity(function(mover)
+			mover.P = data["bodyVelocityP"]
+		end)
 	end
 
 
@@ -277,8 +279,10 @@ function TrainModule.new(trainModel, data)
 			return false
 		end
 		classSelf["currentDriver"] = nil
-		classSelf.basePart.BodyVelocity.MaxForce = Vector3.new(0,0,0)
-		classSelf.basePart.BodyVelocity.Velocity = Vector3.new(0,0,0)
+		classSelf:IterateBodyVelocity(function(mover)
+			mover.MaxForce = Vector3.new(0,0,0)
+			mover.Velocity = Vector3.new(0,0,0)
+		end)
 		classSelf.Properties.throttle = 0
 		classSelf:AnchorTrain()
 		classSelf.Properties.Event:Fire("base", {class = classSelf, action = "DriverOut"})
