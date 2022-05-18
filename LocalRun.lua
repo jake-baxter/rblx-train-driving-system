@@ -2,7 +2,7 @@
 	// **READ-ONLY**
 	// FileName: LocalRun.lua
 	// Written by: Jake Baxter
-	// Version v0.0.0-alpha.3
+	// Version v0.0.0-alpha.4
 	// Description: Local Script for Train Control (UI)
 
 	// Contributors:
@@ -52,8 +52,7 @@ repeat task.wait(1) until finishedInit --// We don't want to continue.
 
 local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
-local basePart = RawSelf["basePart"]
-local revBasePart = RawSelf["revBasePart"]
+local baseParts = RawSelf["baseParts"]
 local throttle = RawSelf["throttle"]
 local brake = RawSelf["brake"]
 local throttlePower = RawSelf["throttlePower"]
@@ -83,16 +82,22 @@ debounce.touchsliderup = false
 debounce.touchsliderdown = false
 
 
+local IterateBaseParts = function(func)
+	for _,v in pairs(baseParts) do
+		func(v)
+	end
+end
+
 --//TO EDIT IF NECESARRY
-local setVelocity = function()
+local setVelocity = function(selectedVel)
     if isReversed == false then
         --//This uses hhwheats simple driving calculations. Change if you wish.
-        local vectorpower = generalPower*basePart.CFrame.lookVector
-        basePart["BodyVelocity"].MaxForce = Vector3.new(vectorpower.X>0 and vectorpower.X or -vectorpower.X,
+        local vectorpower = generalPower*selectedVel.CFrame.lookVector
+        selectedVel["BodyVelocity"].MaxForce = Vector3.new(vectorpower.X>0 and vectorpower.X or -vectorpower.X,
             vectorpower.Y>0 and vectorpower.Y or -vectorpower.Y,
             vectorpower.Z>0 and vectorpower.Z or -vectorpower.Z
         )
-        basePart["BodyVelocity"].Velocity = (Velocity)*basePart.CFrame.lookVector
+        selectedVel["BodyVelocity"].Velocity = (Velocity)*selectedVel.CFrame.lookVector
     end
 end
 
@@ -126,16 +131,21 @@ end
 
 local function PerformVelocityChanges(delta)
 	Velocity = math.clamp((Velocity + (delta*currentThrottle*throttlePower) - (delta*currentBrake*brakePower)), 0, maxSpeed)
-    if basePart.Anchored == true then
-        Velocity = 0
-    end
+	IterateBaseParts(function(SelectedBasePart)
+		if SelectedBasePart.Anchored == true then
+        	Velocity = 0
+    	end
+	end)
+    
 end
 
 
 RunService.Heartbeat:connect(function(delta)
     UpdateStatistics(delta)
     PerformVelocityChanges(delta)
-    setVelocity()
+	IterateBaseParts(function(selectedvelocity)
+		setVelocity(selectedvelocity)
+	end)
 end)
 
 UserInputService.InputBegan:connect(function(input)

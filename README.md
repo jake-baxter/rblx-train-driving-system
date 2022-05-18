@@ -154,9 +154,17 @@ returns `bool` - Returns if anchored or not.
 
 returns `bool` - Returns true
 
-### ```:EnableDefaultUI``` - Enables the default UI
+### ```:EnableDefaultUI()``` - Enables the default UI
 
 returns `bool` - Returns true
+
+### ```:IterateBodyVelocity(function(BodyVelocity))`` - Fires a function for each body velocity. Add a function in params and in the params for the function inside has BodyVelocityParams.
+
+returns `nil` - Returns  nil 
+
+### ```:GetProperty(PropertyName)`` - Returns property value
+
+returns `any` - Returns  property val. Can be Nil!!
 
 # Train Input Data
 This systems .new() function relies on a table being inputted as a second argument. These values can be put into the train input data table argument.
@@ -165,13 +173,11 @@ Value will be followed by value type. * means required, " is recommended
 
 `basestud`(float - 1)" - Edit how a stud is measured in the system (e.g. convert to mph)
 
-`basePart`(object)* - Object value that controls train movement (BodyVelocity will be made by system automatically)
-
-`revBasePart`(object - nil) - Object value that controls train movement when reversed (BodyVelocity will be made by system automatically)
+`basePart`(object or table)* - Object value or table of lots of base parts that controls train movement (BodyVelocity will be made by system automatically)
 
 `vehicleSeat`(object)* - Object value to seat or vehicle seat to sit in
 
-`revVehicleSeat`(object - nil) - Object value to reversible seat or vehicle seat to sit in
+`revVehicleSeat`(object - nil) - Object value to reversible seat or vehicle seat to sit in 
 
 `throttle`(int)* - Throttle Notches
 
