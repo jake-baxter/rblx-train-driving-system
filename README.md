@@ -173,7 +173,7 @@ Value will be followed by value type. * means required, " is recommended
 
 `basestud`(float - 1)" - Edit how a stud is measured in the system (e.g. convert to mph)
 
-`basePart`(object or table)* - Object value or table of lots of base parts that controls train movement (BodyVelocity will be made by system automatically)
+`baseParts`(object or table)* - Object value or table of lots of base parts that controls train movement (BodyVelocity will be made by system automatically)
 
 `vehicleSeat`(object)* - Object value to seat or vehicle seat to sit in
 
