@@ -66,14 +66,7 @@ function TrainModule.new(trainModel, data)
 	if type(data["baseParts"]) == "table" then
 		classSelf.Properties.baseParts = data["baseParts"]
 	end
-	classSelf:IterateBodyVelocity(function(mover)
-		if not data["MoverType"] then
-			Instance.new("BodyVelocity", mover)
-			mover.MaxForce = Vector3.new(0,0,0)
-			mover.Velocity = Vector3.new(0,0,0)
-			mover.P = 1250
-			classSelf["MoverType"] = "BodyVelocity"
-		end
+	classSelf:IterateBaseParts(function(mover)
 		if data["MoverType"] == "BodyVelocity" then
 			Instance.new("BodyVelocity", mover)
 			mover.MaxForce = Vector3.new(0,0,0)
@@ -87,6 +80,12 @@ function TrainModule.new(trainModel, data)
 		if data["MoverType"] == "LinearVelocity" then
 			classSelf["MoverType"] = "LinearVelocity"
 		end
+		Instance.new("BodyVelocity", mover)
+		mover.MaxForce = Vector3.new(0,0,0)
+		mover.Velocity = Vector3.new(0,0,0)
+		mover.P = 1250
+		classSelf["MoverType"] = "BodyVelocity"
+
 	end)
 
 	
@@ -259,7 +258,7 @@ function TrainModule.new(trainModel, data)
 			tempPlayerGui = classSelf.Properties["GUI"]:Clone()
 			tempPlayerGui.Parent = tempPlayerStore.PlayerGui
 		end
-		classSelf["currentDriver"] = tempPlayerStore
+		classSelf.Properties["currentDriver"] = tempPlayerStore
 		classSelf:UnanchorTrain()
 		classSelf.Properties.Event:Fire("base", {class = classSelf.Properties, action = "DriverIn", player = tempPlayerStore, UI = tempPlayerGui})
 	end)
@@ -269,7 +268,7 @@ function TrainModule.new(trainModel, data)
 		if not (child.Name == "SeatWeld") then
 			return false
 		end
-		classSelf["currentDriver"] = nil
+		classSelf.Properties["currentDriver"] = nil
 		classSelf:IterateBodyVelocity(function(mover)
 			mover.MaxForce = Vector3.new(0,0,0)
 			mover.Velocity = Vector3.new(0,0,0)
@@ -469,6 +468,22 @@ function LocalModule:IterateBodyVelocity(BodyVelFunc)
 		if basePart:FindFirstChild("BodyVelocity") then
 			BodyVelFunc(basePart:FindFirstChild("BodyVelocity"))
 		end
+	end
+end
+
+
+function LocalModule:IterateBaseParts(Function)
+	if not self then
+		return false
+	end
+	if not self.Properties.baseParts then
+		return false
+	end
+	if not Function then
+		return false
+	end
+	for _,basePart in pairs(self.Properties.baseParts) do
+		Function(basePart)
 	end
 end
 
