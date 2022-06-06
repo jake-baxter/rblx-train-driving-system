@@ -2,7 +2,7 @@
 	// **READ-ONLY**
 	// FileName: TrainModule.lua
 	// Written by: Jake Baxter
-	// Version v0.0.0-alpha.4
+	// Version v0.0.0-alpha.5
 	// Description: An API for train control in roblox.
 
 	// Contributors:
