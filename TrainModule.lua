@@ -56,9 +56,9 @@ function TrainModule.new(trainModel, data)
 	classSelf.Properties.remoteEvent = tempRemoteEvent
 
 
-	assert(data["baseParts"], "Include Base Part Object Reference")
+
 	if not (data["baseParts"]:IsA("BasePart") or type(data["baseParts"]) == "table") then
-		error("Base part must include your running base part!")
+		error("baseParts object needs setting as a base part.")
 	end
 	if data["baseParts"]:IsA("BasePart") then
 		classSelf.Properties.baseParts = {data["baseParts"]}
@@ -100,7 +100,6 @@ function TrainModule.new(trainModel, data)
 	end
 
 
-	assert(data["throttle"], "Include Throttle Value")
 	if not (typeof(data["throttle"]) == "number" and math.floor(data["throttle"]) == data["throttle"]) then
 		error("Throttle must be an integer!")
 	end
@@ -110,7 +109,6 @@ function TrainModule.new(trainModel, data)
 	classSelf.Properties.throttle = data["throttle"]
 
 
-	assert(data["brake"], "Include Brake Value")
 	if not (typeof(data["brake"]) == "number" and math.floor(data["brake"]) == data["brake"]) then
 		error("Brake must be an integer!")
 	end
@@ -120,7 +118,6 @@ function TrainModule.new(trainModel, data)
 	classSelf.Properties.brake = data["brake"]
 
 
-	assert(data["throttlePower"], "Include Throttle Power Value")
 	if not (typeof(data["throttlePower"]) == "number") then
 		error("Throttle Power  must be a number!")
 	end
@@ -130,7 +127,6 @@ function TrainModule.new(trainModel, data)
 	classSelf.Properties.throttlePower = data["throttlePower"]
 
 
-	assert(data["brakePower"], "Include Throttle Power Value")
 	if not (typeof(data["brakePower"]) == "number") then
 		error("Brake Power  must be a number!")
 	end
@@ -140,7 +136,6 @@ function TrainModule.new(trainModel, data)
 	classSelf.Properties.brakePower = data["brakePower"]
 
 
-	assert(data["throttleFullTime"], "Include Throttle Up Time Value")
 	if not (typeof(data["throttleFullTime"]) == "number") then
 		error("Throttle Up Time  must be a number!")
 	end
@@ -150,7 +145,6 @@ function TrainModule.new(trainModel, data)
 	classSelf.Properties.throttleFullTime = data["throttleFullTime"]
 
 
-	assert(data["throttleIdleTime"], "Include Throttle Down Time Value")
 	if not (type(data["throttleIdleTime"]) == "number") then
 		error("Throttle Down Time  must be a number!")
 	end
@@ -161,7 +155,6 @@ function TrainModule.new(trainModel, data)
 
 
 
-	assert(data["brakeFullTime"], "Include Brake Up Time Value")
 	if not (typeof(data["brakeFullTime"]) == "number") then
 		error("Brake Up Time  must be a number!")
 	end
@@ -171,7 +164,6 @@ function TrainModule.new(trainModel, data)
 	classSelf.Properties.brakeFullTime = data["brakeFullTime"]
 
 
-	assert(data["brakeIdleTime"], "Brake Throttle Down Time Value")
 	if not (typeof(data["brakeIdleTime"]) == "number") then
 		error("Brake Down Time  must be a number!")
 	end
@@ -181,7 +173,6 @@ function TrainModule.new(trainModel, data)
 	classSelf.Properties.brakeIdleTime = data["brakeIdleTime"]
 
 
-	assert(data["maxSpeed"], "maxSpeed Value")
 	if not (typeof(data["maxSpeed"]) == "number") then
 		error("maxSpeed  must be a number!")
 	end
@@ -195,7 +186,7 @@ function TrainModule.new(trainModel, data)
 		if not (typeof(data["bodyVelocityP"]) == "number" and math.floor(data["bodyVelocityP"]) == data["bodyVelocityP"]) then
 			error("bodyVelocityP must be an integer!")
 		end
-		if data["throttle"] < 1 then
+		if data["bodyVelocityP"] < 1 then
 			error("bodyVelocityP must be greater to or 1!")
 		end
 		classSelf.Properties.bodyVelocityP = data["bodyVelocityP"]
@@ -210,7 +201,7 @@ function TrainModule.new(trainModel, data)
 		if not (typeof(data["MaxPower"]) == "number" and math.floor(data["MaxPower"]) == data["MaxPower"]) then
 			error("MaxPower must be an integer!")
 		end
-		if data["throttle"] < 1 then
+		if data["MaxPower"] < 1 then
 			error("MaxPower must be greater to or 1!")
 		end
 		classSelf.Properties.MaxPower = data["MaxPower"]
