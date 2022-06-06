@@ -66,9 +66,9 @@ function TrainModule.new(trainModel, data)
 	if type(data["baseParts"]) == "table" then
 		classSelf.Properties.baseParts = data["baseParts"]
 	end
-	classSelf:IterateBaseParts(function(mover)
+	classSelf:IterateBaseParts(function(basepart)
 		if data["MoverType"] == "BodyVelocity" then
-			Instance.new("BodyVelocity", mover)
+			local mover = Instance.new("BodyVelocity", basepart)
 			mover.MaxForce = Vector3.new(0,0,0)
 			mover.Velocity = Vector3.new(0,0,0)
 			mover.P = 1250
@@ -80,7 +80,7 @@ function TrainModule.new(trainModel, data)
 		if data["MoverType"] == "LinearVelocity" then
 			classSelf["MoverType"] = "LinearVelocity"
 		end
-		Instance.new("BodyVelocity", mover)
+		local mover = Instance.new("BodyVelocity", basepart)
 		mover.MaxForce = Vector3.new(0,0,0)
 		mover.Velocity = Vector3.new(0,0,0)
 		mover.P = 1250
