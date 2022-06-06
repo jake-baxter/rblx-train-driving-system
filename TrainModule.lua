@@ -283,7 +283,6 @@ function TrainModule.new(trainModel, data)
 			mover.MaxForce = Vector3.new(0,0,0)
 			mover.Velocity = Vector3.new(0,0,0)
 		end)
-		classSelf.Properties.throttle = 0
 		classSelf:AnchorTrain()
 		classSelf.Properties.Event:Fire("base", {class = classSelf.Properties, action = "DriverOut"})
 	end)
@@ -421,7 +420,7 @@ end
 function LocalModule:UnanchorTrain()
 	for _,basePartsUnanchor in pairs(self.Properties.trainModel:GetDescendants()) do
 		if basePartsUnanchor:IsA("BasePart") then
-			basePartsUnanchor.Properties.Anchored = false
+			basePartsUnanchor.Anchored = false
 		end
 	end
 
@@ -441,7 +440,7 @@ end
 function LocalModule:AnchorTrain()
 	for _,basePartsUnanchor in pairs(self.Properties.trainModel:GetDescendants()) do
 		if basePartsUnanchor:IsA("BasePart") then
-			basePartsUnanchor.Properties.Anchored = true
+			basePartsUnanchor.Anchored = true
 		end
 	end
 	self.Properties.Anchored = true
