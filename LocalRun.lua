@@ -63,7 +63,7 @@ local brakeFullTime = RawSelf["brakeFullTime"]
 local brakeIdleTime = RawSelf["brakeIdleTime"]
 local isReversed = RawSelf["reversed"]
 local generalPower = RawSelf["MaxPower"]
-local maxSpeed = RawSelf["MaxPower"]
+local maxSpeed = RawSelf["maxSpeed"]
 local baseStud = RawSelf["baseStud"]
 local developerMode = RawSelf["rawData"]["debugMode"]
 
