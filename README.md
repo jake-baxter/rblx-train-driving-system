@@ -7,7 +7,7 @@ If you'd like to get straight on with it, a .rbxm is provided in the releases, b
 
 If you are a programmer wishing to help contribute to this repository, please read down at the bottom of this.
 
-[Click here for a place example](https://www.roblox.com/games/8026502237/v0-0-0-alpha-TrainModule) - This Place is out of date, and should check the rbxl included in releases
+For a place example please see the releases.
 
 # Keyboard Controls in base driving system
 
@@ -21,7 +21,7 @@ If you are a programmer wishing to help contribute to this repository, please re
 
 # YouTube Video
 
-To be updated
+[![A Tutorial](http://img.youtube.com/vi/wZHNsduTllg/0.jpg)](http://www.youtube.com/watch?v=wZHNsduTllg)
 
 # Installation
 To get a stable release, head to [this page](https://github.com/jake-baxter/rblx-train-driving-system/releases) this page and download a version with a stable tag.
@@ -158,11 +158,19 @@ returns `bool` - Returns true
 
 returns `bool` - Returns true
 
-### ```:IterateBodyVelocity(function(BodyVelocity))`` - Fires a function for each body velocity. Add a function in params and in the params for the function inside has BodyVelocityParams.
+### ```:IterateBodyVelocity(function(BodyVelocity))``` - Fires a function for each body velocity. Add a function in params and in the params for the function inside has BodyVelocityParams.
 
 returns `nil` - Returns  nil 
 
-### ```:GetProperty(PropertyName)`` - Returns property value
+
+
+### ```:IterateBaseParts(function(BasePart))``` - Fires a function for each Base Part. Add a function in params and the function will be called with one parameter which is the base part..
+
+returns `nil` - Returns  nil 
+
+
+
+### ```:GetProperty(PropertyName)``` - Returns property value
 
 returns `any` - Returns  property val. Can be Nil!!
 
@@ -171,7 +179,7 @@ This systems .new() function relies on a table being inputted as a second argume
 
 Value will be followed by value type. * means required, " is recommended
 
-`basestud`(float - 1)" - Edit how a stud is measured in the system (e.g. convert to mph)
+`basestud`(float - 1)" - Input your values as a different format, and this will fix it into studs. This works in the fact that StudConversion = Value * basestud.   So e.g. Maximum Speed will be worked out through the fact that MaxSpeedInStuds = MaxSpeed * basestud.
 
 `baseParts`(object or table)* - Object value or table of lots of base parts that controls train movement (BodyVelocity will be made by system automatically)
 

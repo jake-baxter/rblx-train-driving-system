@@ -2,7 +2,7 @@
 	// **READ-ONLY**
 	// FileName: TrainModule.lua
 	// Written by: Jake Baxter
-	// Version v0.0.0-alpha.5
+	// Version v0.0.0-alpha.6
 	// Description: An API for train control in roblox.
 
 	// Contributors:
@@ -40,7 +40,7 @@ function TrainModule.new(trainModel, data)
 	local moduleEvent = Instance.new("BindableEvent")
 	classSelf.Properties.Event = moduleEvent
 	classSelf.Properties.baseStud = 1
-	if not data["baseStud"] then
+	if data["baseStud"] and type(data["baseStud"]) == "number" then
 		classSelf.Properties.baseStud = data["baseStud"]
 	end
 
