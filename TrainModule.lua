@@ -40,7 +40,7 @@ function TrainModule.new(trainModel, data)
 	local moduleEvent = Instance.new("BindableEvent")
 	classSelf.Properties.Event = moduleEvent
 	classSelf.Properties.baseStud = 1
-	if data["baseStud"] then
+	if data["baseStud"] and type(data["baseStud"]) == "number" then
 		classSelf.Properties.baseStud = data["baseStud"]
 	end
 
