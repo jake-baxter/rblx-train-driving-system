@@ -158,11 +158,19 @@ returns `bool` - Returns true
 
 returns `bool` - Returns true
 
-### ```:IterateBodyVelocity(function(BodyVelocity))`` - Fires a function for each body velocity. Add a function in params and in the params for the function inside has BodyVelocityParams.
+### ```:IterateBodyVelocity(function(BodyVelocity))``` - Fires a function for each body velocity. Add a function in params and in the params for the function inside has BodyVelocityParams.
 
 returns `nil` - Returns  nil 
 
-### ```:GetProperty(PropertyName)`` - Returns property value
+
+
+### ```:IterateBaseParts(function(BasePart))``` - Fires a function for each Base Part. Add a function in params and the function will be called with one parameter which is the base part..
+
+returns `nil` - Returns  nil 
+
+
+
+### ```:GetProperty(PropertyName)``` - Returns property value
 
 returns `any` - Returns  property val. Can be Nil!!
 
