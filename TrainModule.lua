@@ -259,7 +259,6 @@ function TrainModule.new(trainModel, data)
 			tempPlayerGui.Parent = tempPlayerStore.PlayerGui
 		end
 		classSelf.Properties["currentDriver"] = tempPlayerStore
-		classSelf:UnanchorTrain()
 		classSelf.Properties.Event:Fire("base", {class = classSelf.Properties, action = "DriverIn", player = tempPlayerStore, UI = tempPlayerGui})
 	end)
 
@@ -290,6 +289,7 @@ function TrainModule.new(trainModel, data)
 		end
 		classSelf.Properties.remoteEvent:FireClient(player, moduleName, classSelf.Properties)
 		classSelf.Properties.Event:Fire("base", {class = classSelf.Properties, action = "ClientRegistered", player = player})
+		classSelf:UnanchorTrain()
 	end)
 
 
