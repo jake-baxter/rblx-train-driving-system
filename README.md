@@ -1,11 +1,13 @@
 # A Roblox Train Driving System - A Simple Driving System for anyone
 
+**Join the discord for updates and to properly get involved in the community: [https://discord.gg/M5cK54vKWK](https://discord.gg/M5cK54vKWK)**
+
 This repository is based around a Roblox Train Driving system for anyone, no matter scripting knowledge, to use and play with.
 If you'd like to get straight on with it, a .rbxm is provided in the releases, but its best you read the below.
 
 If you are a programmer wishing to help contribute to this repository, please read down at the bottom of this.
 
-[Click here for a place example](https://www.roblox.com/games/8026502237/v0-0-0-alpha-TrainModule)
+For a place example please see the releases.
 
 # Keyboard Controls in base driving system
 
@@ -19,7 +21,7 @@ If you are a programmer wishing to help contribute to this repository, please re
 
 # YouTube Video
 
-To be updated
+[![A Tutorial](http://img.youtube.com/vi/wZHNsduTllg/0.jpg)](http://www.youtube.com/watch?v=wZHNsduTllg)
 
 # Installation
 To get a stable release, head to [this page](https://github.com/jake-baxter/rblx-train-driving-system/releases) this page and download a version with a stable tag.
@@ -106,6 +108,12 @@ returns `bool` - True/False if enabled or not
 
 returns `bool` - True/False if enabled or not
 
+### ```:GetModule(moduleName)``` - Disables a Module
+
+`moduleName`  String Value of model name
+
+returns `table` - Functions and variables the developer of the plugin gives you
+
 ### ```:SendMessage(moduleName, Table)``` - Sends a message server side.
 
 `moduleName`  String Value of module name to send a message to or on behalf.
@@ -146,24 +154,38 @@ returns `bool` - Returns if anchored or not.
 
 returns `bool` - Returns true
 
-### ```:EnableDefaultUI``` - Enables the default UI
+### ```:EnableDefaultUI()``` - Enables the default UI
 
 returns `bool` - Returns true
+
+### ```:IterateBodyVelocity(function(BodyVelocity))``` - Fires a function for each body velocity. Add a function in params and in the params for the function inside has BodyVelocityParams.
+
+returns `nil` - Returns  nil 
+
+
+
+### ```:IterateBaseParts(function(BasePart))``` - Fires a function for each Base Part. Add a function in params and the function will be called with one parameter which is the base part..
+
+returns `nil` - Returns  nil 
+
+
+
+### ```:GetProperty(PropertyName)``` - Returns property value
+
+returns `any` - Returns  property val. Can be Nil!!
 
 # Train Input Data
 This systems .new() function relies on a table being inputted as a second argument. These values can be put into the train input data table argument.
 
 Value will be followed by value type. * means required, " is recommended
 
-`basestud`(float - 1)" - Edit how a stud is measured in the system (e.g. convert to mph)
+`basestud`(float - 1)" - Input your values as a different format, and this will fix it into studs. This works in the fact that StudConversion = Value * basestud.   So e.g. Maximum Speed will be worked out through the fact that MaxSpeedInStuds = MaxSpeed * basestud.
 
-`basePart`(object)* - Object value that controls train movement (BodyVelocity will be made by system automatically)
-
-`revBasePart`(object - nil) - Object value that controls train movement when reversed (BodyVelocity will be made by system automatically)
+`baseParts`(object or table)* - Object value or table of lots of base parts that controls train movement (BodyVelocity will be made by system automatically)
 
 `vehicleSeat`(object)* - Object value to seat or vehicle seat to sit in
 
-`revVehicleSeat`(object - nil) - Object value to reversible seat or vehicle seat to sit in
+`revVehicleSeat`(object - nil) - Object value to reversible seat or vehicle seat to sit in 
 
 `throttle`(int)* - Throttle Notches
 
@@ -233,21 +255,22 @@ When making your own functions using events make sure to assign it a new ModuleN
 A ModuleScript plugin layout:
 ```
 local Plugin = {}
+Plugin.GloballyAccessible = {}
 Plugin.Name = "Your very cool plugin"
 Plugin.Version = {0, 0, 0} --//Change the first two numbers to the appropiate driving, the last one is optional for plugin identification
 Plugin.__index = Plugin
 
-function Plugin.init(superiorSelf, EventListener)
+function Plugin.GloballyAccessible.init(superiorSelf, EventListener)
 	local classSelf = {}
 	setmetatable(classSelf, Plugin)
 
 	--// do work
 
-	return classSelf
+	return classSelf.GloballyAccessible
 end
 
 
-function Plugin:OnDisable()
+function Plugin.GloballyAccessible:OnDisable()
     if not self then
         return false
     end
@@ -256,6 +279,6 @@ function Plugin:OnDisable()
 
 	return true
 end
-
+Plugin.init = Plugin.GloballyAccessible.init
 return Plugin
 ```

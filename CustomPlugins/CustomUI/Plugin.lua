@@ -1,7 +1,7 @@
 --[[
 	// FileName: CustomUI.lua
 	// Written by: Jake Baxter
-	// Version: v0.0.0-alpha.2
+	// Version: v0.0.0-alpha.3
 	// Description: CustomUI builder that generates a driving UI
 
 	// Contributors:
