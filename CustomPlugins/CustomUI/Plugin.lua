@@ -1,11 +1,6 @@
 --[[
-	// FileName: CustomUI.lua
+	// FileName: Plugin.lua
 	// Written by: Jake Baxter
-	// Version: v0.0.0-alpha.3
-	// Description: CustomUI builder that generates a driving UI
-
-	// Contributors:
-        
 --]]
 
 local Plugin = {}

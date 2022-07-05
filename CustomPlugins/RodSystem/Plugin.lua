@@ -1,11 +1,6 @@
 --[[
-	// FileName: RodSystem.lua
+	// FileName: Plugin.lua
 	// Written by: Jake Baxter
-	// Version: v0.0.0-alpha.3
-	// Description: Prepares NWSpacek Rod System for driving system. To learn how to use this check "rod values.txt" in the github.
-
-	// Contributors:
-        
 --]]
 
 local Plugin = {}

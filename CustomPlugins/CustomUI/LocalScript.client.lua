@@ -1,20 +1,7 @@
 --[[
-	// **READ-ONLY**
-	// FileName: LocalRun.lua
+	// FileName: LocalScript.client.lua
 	// Written by: Jake Baxter
-	// Version v0.0.0-alpha.6
-	// Description: Local Script for Train Control (UI)
-
-	// Contributors:
-		bobsterjsdev (debug mode)
-	
-
-	// Required by:
-		Local Players
-
-	// Note: LOCAL SCRIPTS ONLY.
 --]]
-
 
 --//Variables
 local VehicleSeat = game.Players.LocalPlayer.Character.Humanoid.SeatPart
@@ -52,7 +39,8 @@ repeat task.wait(1) until finishedInit --// We don't want to continue.
 
 local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
-local baseParts = RawSelf["baseParts"]
+local basePart = RawSelf["basePart"]
+local revBasePart = RawSelf["revBasePart"]
 local throttle = RawSelf["throttle"]
 local brake = RawSelf["brake"]
 local throttlePower = RawSelf["throttlePower"]
@@ -63,7 +51,7 @@ local brakeFullTime = RawSelf["brakeFullTime"]
 local brakeIdleTime = RawSelf["brakeIdleTime"]
 local isReversed = RawSelf["reversed"]
 local generalPower = RawSelf["MaxPower"]
-local maxSpeed = RawSelf["maxSpeed"]
+local maxSpeed = RawSelf["MaxPower"]
 local baseStud = RawSelf["baseStud"]
 local developerMode = RawSelf["rawData"]["debugMode"]
 
@@ -82,58 +70,59 @@ debounce.touchsliderup = false
 debounce.touchsliderdown = false
 
 
-local IterateBaseParts = function(func)
-	for _,v in pairs(baseParts) do
-		func(v)
-	end
-end
-
 --//TO EDIT IF NECESARRY
-local setVelocity = function(selectedVel)
+local setVelocity = function()
     if isReversed == false then
         --//This uses hhwheats simple driving calculations. Change if you wish.
-        local vectorpower = generalPower*selectedVel.CFrame.lookVector
-        selectedVel["BodyVelocity"].MaxForce = Vector3.new(vectorpower.X>0 and vectorpower.X or -vectorpower.X,
+        local vectorpower = generalPower*basePart.CFrame.lookVector
+        basePart["BodyVelocity"].MaxForce = Vector3.new(vectorpower.X>0 and vectorpower.X or -vectorpower.X,
             vectorpower.Y>0 and vectorpower.Y or -vectorpower.Y,
             vectorpower.Z>0 and vectorpower.Z or -vectorpower.Z
         )
-        selectedVel["BodyVelocity"].Velocity = (Velocity)*selectedVel.CFrame.lookVector
+        basePart["BodyVelocity"].Velocity = (Velocity)*basePart.CFrame.lookVector
     end
 end
 
 local function UpdateStatistics(delta)
-	if currentThrottle > (targettedThrottle / throttle) then
-		currentThrottle = math.clamp(currentThrottle - ((delta) / (throttleIdleTime)), (targettedThrottle/throttle), 1)
+	if currentThrottle > targettedThrottle then
+		currentThrottle = math.clamp(currentThrottle - ((delta) / throttleIdleTime), 0, 1) -- down
+		if currentThrottle < targettedThrottle then
+			currentThrottle = targettedThrottle
+		end
 	end
-	if currentThrottle < (targettedThrottle / throttle) then
-		currentThrottle = math.clamp(currentThrottle + ((delta) / (throttleFullTime)), 0, (targettedThrottle/throttle))
+	if currentThrottle < targettedThrottle then
+		currentThrottle = math.clamp(currentThrottle + ((delta) / throttleFullTime), 0, 1) -- up
+		if currentThrottle > targettedThrottle then
+			currentThrottle = targettedThrottle
+		end
 	end
-	if currentBrake > (targettedBrake / brake) then
-		currentBrake = math.clamp(currentBrake - ((delta) / (brakeIdleTime)), (targettedBrake/brake), 1)
+	if currentBrake > targettedBrake then
+		currentBrake = math.clamp(currentBrake - ((delta) /brakeIdleTime), 0, 1) --down
+		if currentBrake < targettedBrake then
+			currentBrake = targettedBrake
+		end
 	end
-	if currentBrake < (targettedBrake / brake) then
-		currentBrake = math.clamp(currentBrake + ((delta) / (brakeFullTime)), 0, (targettedBrake/brake))
+	if currentBrake < targettedBrake then
+		currentBrake = math.clamp(currentBrake + ((delta) /brakeFullTime), 0, 1)--up
+		if currentBrake > targettedBrake then
+			currentBrake = targettedBrake
+		end
 	end
 end
 
 
 local function PerformVelocityChanges(delta)
-	Velocity = math.clamp((Velocity + (delta*currentThrottle*(throttlePower * baseStud)) - (delta*currentBrake*(brakePower*baseStud))), 0, maxSpeed*baseStud)
-	IterateBaseParts(function(SelectedBasePart)
-		if SelectedBasePart.Anchored == true then
-        	Velocity = 0
-    	end
-	end)
-    
+	Velocity = math.clamp((Velocity + (delta*currentThrottle*throttlePower) - (delta*currentBrake*brakePower)), 0, maxSpeed)
+    if basePart.Anchored == true then
+        Velocity = 0
+    end
 end
 
 
 RunService.Heartbeat:connect(function(delta)
     UpdateStatistics(delta)
     PerformVelocityChanges(delta)
-	IterateBaseParts(function(selectedvelocity)
-		setVelocity(selectedvelocity)
-	end)
+    setVelocity()
 end)
 
 UserInputService.InputBegan:connect(function(input)
@@ -141,28 +130,28 @@ UserInputService.InputBegan:connect(function(input)
         if debounce.up then
             return
         end
-        targettedThrottle = math.clamp(targettedThrottle + 1, 0, throttle)
+        targettedThrottle = math.clamp(targettedThrottle + (1/throttle), 0, 1)
 		RemoteClientEvent:FireServer("base", {action = "MovementUpdate", throttle = targettedThrottle, brake = targettedBrake})
     end
     if input.KeyCode == Enum.KeyCode.S then
         if debounce.up then
             return
         end
-        targettedThrottle = math.clamp(targettedThrottle - 1, 0, throttle)
+        targettedThrottle = math.clamp(targettedThrottle - (1/throttle), 0, 1)
 		RemoteClientEvent:FireServer("base", {action = "MovementUpdate", throttle = targettedThrottle, brake = targettedBrake})
     end
     if input.KeyCode == Enum.KeyCode.A then
         if debounce.down then
             return
         end
-        targettedBrake = math.clamp(targettedBrake + 1, 0, brake)
+        targettedBrake = math.clamp(targettedBrake + (1/brake), 0, 1)
 		RemoteClientEvent:FireServer("base", {action = "MovementUpdate", throttle = targettedThrottle, brake = targettedBrake})
     end
     if input.KeyCode == Enum.KeyCode.D then
         if debounce.down then
             return
         end
-        targettedBrake = math.clamp(targettedBrake - 1, 0, brake)
+        targettedBrake = math.clamp(targettedBrake - (1/brake), 0, 1)
 		RemoteClientEvent:FireServer("base", {action = "MovementUpdate", throttle = targettedThrottle, brake = targettedBrake})
     end
 end)

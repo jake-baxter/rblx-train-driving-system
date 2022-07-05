@@ -1,11 +1,6 @@
 --[[
-	// FileName: LocalScript.lua
-	// Written by: Jake Baxter
-	// Version: v0.0.0-alpha.3
-	// Description: NWSpacek Local Rod System Modified For RBLX-train-driving-system
-
-	// Contributors:
-        NWSpacek (Not officially)
+	// FileName: LocalScript.client.lua
+	// Written by: Jake Baxter - NWSpacek (Original Code Owner)
 --]]
 
 

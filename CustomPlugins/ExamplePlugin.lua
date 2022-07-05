@@ -1,13 +1,6 @@
 --[[
 	// FileName: ExamplePlugin.lua
-	// Written by: Jake Baxter
-	// Version: v0.0.0-alpha.3
-	// Description: This is an example plugin
-
-	// Contributors:
-        No one
-
-	// Note: This is an example so you know what to do.
+    // An Example for makign plugins. I know its not the best.
 --]]
 
 local Plugin = {}
